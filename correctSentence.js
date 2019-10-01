@@ -1,23 +1,10 @@
-/*
-For the input of your function, you will be given one sentence.
-You have to return a corrected version,
-that starts with a capital letter and ends with a period (dot).
-
-Example:
-
-input (string): "hey, friend"
-output (string): "Hey, friend."
-
-Updated first 'h' to 'H', added '.'.
-
-More examples:
-
-correctSentence("greetings, friends") == "Greetings, friends."
-correctSentence("Greetings, friends") == "Greetings, friends."
-correctSentence("Greetings, friends.") == "Greetings, friends."
- */
-
-function correctSentence(text) {
-  // your solution goes here
-  return text;
+// Converts sentence to correct form
+export default function correctSentence(text) {
+  if (!text.endsWith('.')) {
+    text = text + ".";
+  }
+  // We can pass checking length, as it is at least 1, after first step where we added period.
+  var first_letter = text.slice(0, 1);
+  var suffix = text.slice (1, text.length);
+  return first_letter.toUpperCase() + suffix;
 }
