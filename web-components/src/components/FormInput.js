@@ -4,6 +4,7 @@ template.innerHTML = `
         input {
             border: 0;
             outline: none;
+            font-size: 4vh;
             width: calc(100% - 2px);
         }
 
@@ -34,6 +35,10 @@ class FormInput extends HTMLElement {
 
     get value() {
         return this.$input.value;
+    }
+
+    reset() {
+        this.$input.value = "";
     }
 }
 

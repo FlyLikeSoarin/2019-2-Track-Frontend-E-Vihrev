@@ -15,7 +15,7 @@ template.innerHTML = `
     </style>
     <form>
         <div class="result"></div>
-        <form-input name="message-text" placeholder="Введите сообщеине"></form-input>
+        <form-input name="message-text" placeholder="Message..."></form-input>
     </form>
 `;
 
@@ -30,11 +30,30 @@ class MessageForm extends HTMLElement {
 
         this.$form.addEventListener('submit', this._onSubmit.bind(this));
         this.$form.addEventListener('keypress', this._onKeyPress.bind(this));
+
+        this.attachedDisplay = null;
+    }
+
+    attachDisplay (display) {
+      this.attachedDisplay = display;
     }
 
     _onSubmit (event) {
         event.preventDefault();
-        this.$message.innerText = this.$input.value;
+        message = {"name": "", "datastamp": "", "text": ""}
+        message.text = this.$input.value;
+        message.name = "sender";
+        message.datastamp = new Date().toLocaleTimeString('en-US', { hour12: false,
+                                             hour: "numeric",
+                                             minute: "numeric"});
+        this.$input.reset();
+
+        if (this.attachedDisplay == null) {
+            console.log("No attached display!");
+        } else {
+            this.attachedDisplay.addMessage(message);
+        }
+
     }
 
     _onKeyPress (event) {
