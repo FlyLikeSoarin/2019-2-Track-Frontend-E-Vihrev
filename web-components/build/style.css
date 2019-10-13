@@ -1,0 +1,53 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    background-color: lightgrey;
+    color: #333;
+    font-size: 15px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.messager-body {
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+    border-color: lightgrey;
+    background-color: #fff;
+    width: 40vw;
+    height: 80vh;
+}
+
+.header {
+    background-color: #8E24AA;
+    text-align: left;
+    font-weight: bold;
+    padding-top: 1vh;
+    padding-left: 5vw;
+    color: white;
+    font-size: 7vh;
+    height: 9vh;
+}
+
+messages-display {
+    height: 10vh;
+    flex-basis: 40vh;
+    flex-grow: 1;
+}
+
+message-form {
+    size: 9vh;
+}
+
