@@ -20,47 +20,48 @@ template.innerHTML = `
 `;
 
 class MessageForm extends HTMLElement {
-    constructor () {
-        super();
-        this._shadowRoot = this.attachShadow({ mode: 'open' });
-        this._shadowRoot.appendChild(template.content.cloneNode(true));
-        this.$form = this._shadowRoot.querySelector('form');
-        this.$input = this._shadowRoot.querySelector('form-input');
-        this.$message = this._shadowRoot.querySelector('.result');
+  constructor() {
+    super();
+    this.shadowRoot = this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+    this.$form = this.shadowRoot.querySelector('form');
+    this.$input = this.shadowRoot.querySelector('form-input');
+    this.$message = this.shadowRoot.querySelector('.result');
 
-        this.$form.addEventListener('submit', this._onSubmit.bind(this));
-        this.$form.addEventListener('keypress', this._onKeyPress.bind(this));
+    this.$form.addEventListener('submit', this.onSubmit.bind(this));
+    this.$form.addEventListener('keypress', this.onKeyPress.bind(this));
 
-        this.attachedDisplay = null;
+    this.attachedDisplay = null;
+  }
+
+  attachDisplay(display) {
+    this.attachedDisplay = display;
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+    const message = { name: '', datastamp: '', text: '' };
+    message.text = this.$input.value;
+    message.name = 'sender';
+    message.datastamp = new Date().toLocaleTimeString('en-US', {
+      hour12: false,
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+    this.$input.reset();
+
+    if (this.attachedDisplay == null) {
+      console.log('No attached display!');
+    } else {
+      this.attachedDisplay.addMessage(message);
     }
+  }
 
-    attachDisplay (display) {
-      this.attachedDisplay = display;
+  onKeyPress(event) {
+    if (event.keyCode === 13) {
+      this.$form.dispatchEvent(new Event('submit'));
     }
-
-    _onSubmit (event) {
-        event.preventDefault();
-        message = {"name": "", "datastamp": "", "text": ""}
-        message.text = this.$input.value;
-        message.name = "sender";
-        message.datastamp = new Date().toLocaleTimeString('en-US', { hour12: false,
-                                             hour: "numeric",
-                                             minute: "numeric"});
-        this.$input.reset();
-
-        if (this.attachedDisplay == null) {
-            console.log("No attached display!");
-        } else {
-            this.attachedDisplay.addMessage(message);
-        }
-
-    }
-
-    _onKeyPress (event) {
-        if (event.keyCode == 13) {
-            this.$form.dispatchEvent(new Event('submit'));
-        }
-    }
+  }
 }
 
 customElements.define('message-form', MessageForm);
