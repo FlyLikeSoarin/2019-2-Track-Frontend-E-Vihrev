@@ -41,12 +41,8 @@ body {
     height: 9vh;
 }
 
-messages-display {
-    height: 10vh;
-    flex-basis: 40vh;
-    flex-grow: 1;
-}
-
 message-form {
+    flex-basis: 10vh;
+    flex-grow: 1;
     size: 9vh;
 }

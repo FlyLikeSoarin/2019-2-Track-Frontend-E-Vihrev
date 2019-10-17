@@ -5,18 +5,27 @@ template.innerHTML = `
             width: 100%;
         }
 
-        .result {
-            color: red;
+        .body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         input[type=submit] {
             visibility: collapse;
         }
+
+        messages-display {
+          flex-basis: 10vh;
+          flex-grow: 1;
+        }
     </style>
-    <form>
-        <div class="result"></div>
+    <div class='body'>
+      <messages-display></messages-display>
+      <form>
         <form-input name="message-text" placeholder="Message..."></form-input>
-    </form>
+      </form>
+    <div>
 `;
 
 class MessageForm extends HTMLElement {
@@ -27,33 +36,31 @@ class MessageForm extends HTMLElement {
     this.$form = this.shadowRoot.querySelector('form');
     this.$input = this.shadowRoot.querySelector('form-input');
     this.$message = this.shadowRoot.querySelector('.result');
+    this.$body = this.shadowRoot.querySelector('.body');
+    this.$attachedDisplay = this.shadowRoot.querySelector('messages-display');
 
     this.$form.addEventListener('submit', this.onSubmit.bind(this));
     this.$form.addEventListener('keypress', this.onKeyPress.bind(this));
 
-    this.attachedDisplay = null;
-  }
-
-  attachDisplay(display) {
-    this.attachedDisplay = display;
+    this.$body.style.height = this.style.height;
   }
 
   onSubmit(event) {
     event.preventDefault();
-    const message = { name: '', datastamp: '', text: '' };
+    const message = { name: '', datestamp: '', text: '' };
     message.text = this.$input.value;
     message.name = 'sender';
-    message.datastamp = new Date().toLocaleTimeString('en-US', {
+    message.datestamp = new Date().toLocaleTimeString('en-US', {
       hour12: false,
       hour: 'numeric',
       minute: 'numeric',
     });
     this.$input.reset();
 
-    if (this.attachedDisplay == null) {
+    if (this.$attachedDisplay == null) {
       console.log('No attached display!');
     } else {
-      this.attachedDisplay.addMessage(message);
+      this.$attachedDisplay.addMessage(message);
     }
   }
 

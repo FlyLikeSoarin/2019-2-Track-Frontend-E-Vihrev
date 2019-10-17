@@ -1,5 +1,4 @@
 const template = document.createElement('template');
-template.style.display = 'flex';
 template.innerHTML = `
     <style>
         .scroll-body {
@@ -7,35 +6,6 @@ template.innerHTML = `
             overflow-x: hidden;
             flex-basis: 10;
             flex-grow: 1;
-            text-align: right;
-        }
-
-        .message-box {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .message {
-            background-color: lightblue;
-            align-self: flex-end;
-            margin: 0.5vh;
-            border: 1vh;
-            border-radius: 1vh;
-            border-style: solid;
-            border-color: lightblue;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .message-text {
-            font-size: 3vh;
-            margin: 0.3vh;
-        }
-
-        .data-text {
-            align-self: flex-end;
-            color: grey;
-            font-size: 2vh;
         }
     </style>
     <div class="scroll-body">
@@ -45,11 +15,11 @@ template.innerHTML = `
 class MessagesDisplay extends HTMLElement {
   constructor() {
     super();
-    // this.shadowRoot = this.attachShadow({ mode: 'open' });
-    this.appendChild(template.content.cloneNode(true));
+    this.shadowRoot = this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     this.storage = window.localStorage;
-    this.$scrollBody = this.querySelector('.scroll-body');
+    this.$scrollBody = this.shadowRoot.querySelector('.scroll-body');
     this.style.display = 'flex';
 
     this.loadMessages();
@@ -63,13 +33,9 @@ class MessagesDisplay extends HTMLElement {
   renderMessage(message) {
     console.log('Message added to message-display');
     console.log(message.text);
-    this.$scrollBody.appendChild(document.createElement('div'));
-    this.$scrollBody.lastElementChild.classList.add('message-box');
-    this.$scrollBody.lastElementChild.innerHTML = `<div class="message"><div class="message-text">${
-      message.text
-    }</div><div class="data-text">${
-      message.datastamp
-    }</div></div>`;
+    this.$scrollBody.appendChild(document.createElement('message-box'));
+    console.log(this.$scrollBody.lastElementChild);
+    this.$scrollBody.lastElementChild.setMessage(message);
     this.$scrollBody.scrollTop = this.$scrollBody.scrollHeight;
   }
 

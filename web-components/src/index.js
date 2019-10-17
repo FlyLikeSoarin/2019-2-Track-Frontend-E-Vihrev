@@ -1,9 +1,6 @@
 import './index.css';
 
 import './components/FormInput';
-import './components/MessageForm';
+import './components/MessageBox';
 import './components/MessagesDisplay';
-
-const md = document.getElementById('md');
-const mf = document.getElementById('mf');
-mf.attachDisplay(md);
+import './components/MessageForm';
