@@ -47,20 +47,22 @@ class MessageForm extends HTMLElement {
 
   onSubmit(event) {
     event.preventDefault();
-    const message = { name: '', datestamp: '', text: '' };
-    message.text = this.$input.value;
-    message.name = 'sender';
-    message.datestamp = new Date().toLocaleTimeString('en-US', {
-      hour12: false,
-      hour: 'numeric',
-      minute: 'numeric',
-    });
-    this.$input.reset();
+    if (this.$input.value !== '') {
+      const message = { name: '', datestamp: '', text: '' };
+      message.text = this.$input.value;
+      message.name = 'sender';
+      message.datestamp = new Date().toLocaleTimeString('en-US', {
+        hour12: false,
+        hour: 'numeric',
+        minute: 'numeric',
+      });
+      this.$input.reset();
 
-    if (this.$attachedDisplay == null) {
-      console.log('No attached display!');
-    } else {
-      this.$attachedDisplay.addMessage(message);
+      if (this.$attachedDisplay == null) {
+        console.log('No attached display!');
+      } else {
+        this.$attachedDisplay.addMessage(message);
+      }
     }
   }
 

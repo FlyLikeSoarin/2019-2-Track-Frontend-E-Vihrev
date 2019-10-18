@@ -40,20 +40,28 @@ class MessagesDisplay extends HTMLElement {
   }
 
   saveMessage(message) {
-    this.storage.setItem(`Message${this.count.toString()}`, JSON.stringify(message));
-    this.count += 1;
-    this.storage.setItem('Messages_count', this.count.toString());
+    this.messages.count = parseInt(this.messages.count, 10) + 1;
+    this.messages.data.push(message);
+    this.storage.setItem('Messages', JSON.stringify(this.messages));
   }
 
   loadMessages() {
     const state = this.storage.getItem('Is_initialized');
     if (state == null) {
       this.storage.setItem('Is_initialized', 'True');
-      this.storage.setItem('Messages_count', '0');
+      this.messages = { count: 0, data: [] };
+      this.storage.setItem('Messages', JSON.stringify(this.messages));
     } else if (state === 'True') {
-      this.count = +(this.storage.getItem('Messages_count'));
-      for (let i = 0; i < this.count; i += 1) {
-        const message = JSON.parse(this.storage.getItem(`Message${i.toString()}`));
+      if (this.storage.getItem('Messages_count')) {
+        // This block is needed to clear old cache
+        this.storage.clear();
+        this.loadMessages();
+        return;
+      }
+      this.messages = JSON.parse(this.storage.getItem('Messages'));
+      console.log(this.messages);
+      for (let i = 0; i < this.messages.data.length; i += 1) {
+        const message = this.messages.data[i];
         console.log('message loaded:');
         console.log(message);
         this.renderMessage(message);
