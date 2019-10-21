@@ -44,5 +44,6 @@ body {
 message-form {
     flex-basis: 10vh;
     flex-grow: 1;
+    height: 10vh;
     size: 9vh;
 }

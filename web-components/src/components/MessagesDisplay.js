@@ -4,7 +4,7 @@ template.innerHTML = `
         .scroll-body {
             overflow-y: scroll;
             overflow-x: hidden;
-            flex-basis: 10;
+            flex-basis: 10px;
             flex-grow: 1;
         }
     </style>

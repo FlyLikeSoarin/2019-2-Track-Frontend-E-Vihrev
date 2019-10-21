@@ -18,6 +18,7 @@ template.innerHTML = `
         messages-display {
           flex-basis: 10vh;
           flex-grow: 1;
+          height: 100%
         }
     </style>
     <div class='body'>
@@ -41,8 +42,6 @@ class MessageForm extends HTMLElement {
 
     this.$form.addEventListener('submit', this.onSubmit.bind(this));
     this.$form.addEventListener('keypress', this.onKeyPress.bind(this));
-
-    this.$body.style.height = this.style.height;
   }
 
   onSubmit(event) {
