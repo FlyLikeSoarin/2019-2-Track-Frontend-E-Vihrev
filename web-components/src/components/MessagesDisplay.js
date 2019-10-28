@@ -19,10 +19,8 @@ class MessagesDisplay extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     this.storage = window.localStorage;
+    this.localCache = window.localStorage;
     this.$scrollBody = this.shadowRoot.querySelector('.scroll-body');
-    this.style.display = 'flex';
-
-    this.loadMessages();
   }
 
   addMessage(message) {
@@ -31,41 +29,32 @@ class MessagesDisplay extends HTMLElement {
   }
 
   renderMessage(message) {
-    console.log('Message added to message-display');
-    console.log(message.text);
     this.$scrollBody.appendChild(document.createElement('message-box'));
-    console.log(this.$scrollBody.lastElementChild);
     this.$scrollBody.lastElementChild.setMessage(message);
+    this.scrollDown();
+  }
+
+  scrollDown() {
     this.$scrollBody.scrollTop = this.$scrollBody.scrollHeight;
   }
 
   saveMessage(message) {
-    this.messages.count = parseInt(this.messages.count, 10) + 1;
-    this.messages.data.push(message);
-    this.storage.setItem('Messages', JSON.stringify(this.messages));
+    this.localCache.chats[this.name].messages.push(message);
+    this.storage.setItem('Chat_local_cache', JSON.stringify(this.localCache));
   }
 
-  loadMessages() {
-    const state = this.storage.getItem('Is_initialized');
-    if (state == null) {
-      this.storage.setItem('Is_initialized', 'True');
-      this.messages = { count: 0, data: [] };
-      this.storage.setItem('Messages', JSON.stringify(this.messages));
-    } else if (state === 'True') {
-      if (this.storage.getItem('Messages_count')) {
-        // This block is needed to clear old cache
-        this.storage.clear();
-        this.loadMessages();
-        return;
-      }
-      this.messages = JSON.parse(this.storage.getItem('Messages'));
-      console.log(this.messages);
-      for (let i = 0; i < this.messages.data.length; i += 1) {
-        const message = this.messages.data[i];
-        console.log('message loaded:');
-        console.log(message);
-        this.renderMessage(message);
-      }
+  clearDisplay() {
+    while (this.$scrollBody.children.length > 0) {
+      this.$scrollBody.removeChild(this.$scrollBody.lastElementChild);
+    }
+  }
+
+  loadMessages(name) {
+    this.name = name;
+    this.localCache = JSON.parse(this.storage.getItem('Chat_local_cache'));
+    for (let i = 0; i < this.localCache.chats[this.name].messages.length; i += 1) {
+      const message = this.localCache.chats[this.name].messages[i];
+      this.renderMessage(message);
     }
   }
 }

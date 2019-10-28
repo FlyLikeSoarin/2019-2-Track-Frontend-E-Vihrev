@@ -4,8 +4,8 @@ template.innerHTML = `
         input {
             border: 0;
             outline: none;
-            font-size: 4vh;
             width: calc(100% - 2px);
+            font-size: 20px;
         }
 
         :host {
@@ -39,6 +39,10 @@ class FormInput extends HTMLElement {
 
   reset() {
     this.$input.value = '';
+  }
+
+  focusOn() {
+    this.$input.setSelectionRange(0, 0);
   }
 }
 

@@ -54,6 +54,15 @@ module.exports = {
                     },
                 ],
             },
+            {
+                test: /\.png$/,
+                use: [
+                    'file-loader',
+                    {
+                        loader: 'image-webpack-loader',
+                    },
+                ],
+            },
         ],
     },
     plugins: [
