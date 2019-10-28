@@ -2,6 +2,7 @@
 
 const path = require('path');
 
+const ImageWebpackLoader = require("image-webpack-loader");
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
@@ -55,7 +56,7 @@ module.exports = {
                 ],
             },
             {
-                test: /\.png$/,
+                test: /\.(gif|png|jpe?g|svg)$/i,
                 use: [
                     'file-loader',
                     {

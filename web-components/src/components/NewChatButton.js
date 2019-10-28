@@ -75,7 +75,9 @@ class NewChatButton extends HTMLElement {
   }
 
   onSubmit() {
-    this.newChatCallback(this.$form.value);
+    if (this.$form.value.indexOf(' ') === -1) {
+      this.newChatCallback(this.$form.value);
+    }
 
     this.$form.reset();
     this.$input.style.display = 'none';
