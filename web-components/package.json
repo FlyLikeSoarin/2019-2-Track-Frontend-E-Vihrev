@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "test": "eslint ./src/components/** -c ./.eslintrc.js",
+    "test": "eslint *.js -c ./.eslintrc.js",
     "start": "webpack-dev-server --mode=development --hot",
     "build": "webpack --mode=development"
   },
