@@ -18,7 +18,8 @@ template.innerHTML = `
         messages-display {
           flex-basis: 10vh;
           flex-grow: 1;
-          height: 100%
+          height: 100%;
+          display: contents;
         }
     </style>
     <div class='body'>
@@ -42,6 +43,12 @@ class MessageForm extends HTMLElement {
 
     this.$form.addEventListener('submit', this.onSubmit.bind(this));
     this.$form.addEventListener('keypress', this.onKeyPress.bind(this));
+
+    this.applicationCallback = null;
+  }
+
+  setApplicationCallback(callback) {
+    this.applicationCallback = callback;
   }
 
   onSubmit(event) {
@@ -49,19 +56,14 @@ class MessageForm extends HTMLElement {
     if (this.$input.value !== '') {
       const message = { name: '', datestamp: '', text: '' };
       message.text = this.$input.value;
-      message.name = 'sender';
+      message.name = 'me';
       message.datestamp = new Date().toLocaleTimeString('en-US', {
         hour12: false,
         hour: 'numeric',
         minute: 'numeric',
       });
       this.$input.reset();
-
-      if (this.$attachedDisplay == null) {
-        console.log('No attached display!');
-      } else {
-        this.$attachedDisplay.addMessage(message);
-      }
+      this.$attachedDisplay.addMessage(message);
     }
   }
 
@@ -69,6 +71,11 @@ class MessageForm extends HTMLElement {
     if (event.keyCode === 13) {
       this.$form.dispatchEvent(new Event('submit'));
     }
+  }
+
+  load(name) {
+    this.$attachedDisplay.clearDisplay();
+    this.$attachedDisplay.loadMessages(name);
   }
 }
 

@@ -26,24 +26,11 @@ body {
     border-style: solid;
     border-color: lightgrey;
     background-color: #fff;
-    width: 40vw;
+    width: 45vw;
     height: 80vh;
 }
 
-.header {
-    background-color: #8E24AA;
-    text-align: left;
-    font-weight: bold;
-    padding-top: 1vh;
-    padding-left: 5vw;
-    color: white;
-    font-size: 7vh;
-    height: 9vh;
-}
-
-message-form {
-    flex-basis: 10vh;
-    flex-grow: 1;
-    height: 10vh;
-    size: 9vh;
+chat-application {
+  display: block;
+  height: 100%;
 }
