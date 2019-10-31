@@ -18,4 +18,4 @@ deploy:
     branch:
       - master
       - devel
-      - HW3
+      - HW4
