@@ -42,7 +42,8 @@ class FormInput extends HTMLElement {
   }
 
   focusOn() {
-    this.$input.setSelectionRange(0, 0);
+    // this.$input.setSelectionRange(0, 0);
+    this.$input.focus();
   }
 }
 

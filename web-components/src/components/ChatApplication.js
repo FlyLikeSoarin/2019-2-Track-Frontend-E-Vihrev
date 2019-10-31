@@ -52,11 +52,12 @@ class ChatApplication extends HTMLElement {
 
   chatListEventListener(type, contents) {
     if (type === 'load-chat-and-switch') {
-      this.$messageForm.load(contents);
+      console.log(contents);
+      this.$messageForm.load(contents.name);
       this.$chatList.style.display = 'none';
       this.$messageForm.style.display = 'block';
 
-      this.$header.setDialogState(contents);
+      this.$header.setDialogState(contents.displayName, contents.icon);
     }
   }
 

@@ -39,7 +39,9 @@ class ChatList extends HTMLElement {
   }
 
   addChat(name) {
-    const chatData = { name, messages: [], icon: null };
+    let displayName;
+    let validName = name.split(' ').join('');
+    const chatData = { name: validName, messages: [], icon: null, displayName: name };
     this.renderChat(chatData);
     this.saveNewChat(chatData);
   }
@@ -55,6 +57,7 @@ class ChatList extends HTMLElement {
       lastMessage.text,
       lastMessage.datestamp,
       null,
+      chatData.displayName
     );
     this.$scrollBody.lastElementChild.setClickCallback(this.onChatSelection.bind(this));
   }
@@ -65,13 +68,14 @@ class ChatList extends HTMLElement {
     for (let i = 0; i < this.updateQueue.length; i += 1) {
       const name = this.updateQueue[i];
       const children = this.$scrollBody.querySelector(`#${name}`);
-      let lastMessage = 'No messages...';
+      let lastMessage = { text: 'No messages...', datestamp: '' };
       if (this.localCache.chats[name].messages.length > 0) {
         lastMessage = this.localCache.chats[name].messages[
           this.localCache.chats[name].messages.length - 1
         ];
       }
-      children.setChatProps(name, lastMessage.text, lastMessage.datestamp, null);
+      let dname = this.localCache.chats[name].displayName;
+      children.setChatProps(name, lastMessage.text, lastMessage.datestamp, null, dname);
     }
     this.updateQueue = [];
   }
@@ -81,9 +85,14 @@ class ChatList extends HTMLElement {
     this.storage.setItem('Chat_local_cache', JSON.stringify(this.localCache));
   }
 
-  onChatSelection(name) {
+  onChatSelection(name, icon, displayName) {
     this.updateQueue.push(name);
-    this.applicationCallback('load-chat-and-switch', name);
+    this.applicationCallback('load-chat-and-switch', {
+        name: name,
+        icon: icon,
+        displayName: displayName
+      }
+    );
   }
 
   loadChatList() {
