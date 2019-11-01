@@ -8,6 +8,11 @@ template.innerHTML = `
     font-size: 20px;
   }
 
+  @keyframes fadein {
+    from { opacity: 0; margin-right: 10%; margin-left: 10%; }
+    to   { opacity: 1; margin-right: 0%;  margin-left: 0%;  }
+  }
+
   .outgoing {
     background-color: #F3E5F5;
   }
@@ -15,8 +20,11 @@ template.innerHTML = `
   .width-holder {
     max-width: 80%;
     overflow-wrap: break-word;
+    /* background-color: blue; */
     /* display: flex; */
     /* flex-direction: column; */
+
+    animation: fadein 0.6s;
   }
 
   .message {
@@ -72,6 +80,7 @@ class MessageBox extends HTMLElement {
     super();
     this.shadowRoot = this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
+    this.$outerBox = this.shadowRoot.querySelector('.message-box');
     this.$messageElement = this.shadowRoot.querySelector('.message');
     this.$widthHolder = this.shadowRoot.querySelector('.width-holder');
 
@@ -92,6 +101,9 @@ class MessageBox extends HTMLElement {
       this.$messageElement.classList.add('outgoing');
       this.$widthHolder.style.alignSelf = 'flex-end';
     }
+
+    console.log(this.$outerBox);
+    this.$outerBox.classList.add('appearence');
   }
 }
 
