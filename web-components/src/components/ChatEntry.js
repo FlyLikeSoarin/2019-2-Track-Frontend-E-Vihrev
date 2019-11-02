@@ -7,12 +7,19 @@ template.innerHTML = `
   .chat-box {
     display: flex;
     flex-direction: column;
+    color: black;
     font-size: 25px;
-
     padding-bottom: 1.8em;
     padding-left: 0.5em;
     height: 0.5em;
-    margin-top: 0.5em;
+    padding-top: 0.5em;
+    transition: 0.2s;
+  }
+
+  .chat-box:hover {
+    color: white;
+    background-color: #8E24AA52;
+    transition: 0.2s;
   }
 
   .chat {
@@ -23,7 +30,7 @@ template.innerHTML = `
 
   .icon {
     position: relative;
-    top: -0.25em;
+    top: -0.36em;
     height: 2.5em;
     weight: 2.5em;
   }
@@ -62,7 +69,7 @@ template.innerHTML = `
   .name {
     flex-grow: 1;
     align-self: stretch;
-    color: black;
+    /* color: black; */
     height: 1em;
     padding: 0vh;
     border: 0vh;
@@ -120,10 +127,10 @@ class ChatEntry extends HTMLElement {
     this.addEventListener('click', this.onClick.bind(this));
   }
 
-  setChatProps(name, lastMessage, time, icon) {
+  setChatProps(name, lastMessage, time, icon, displayName) {
     this.name = name;
     this.id = this.name;
-    this.$name.innerHTML = name;
+    this.$name.innerHTML = displayName;
 
     let lastMessageText = lastMessage.slice(0, 50 + lastMessage.slice(50, 1000).search(' '));
     if (lastMessageText.length < lastMessage.length) {
@@ -147,7 +154,7 @@ class ChatEntry extends HTMLElement {
 
   onClick() {
     if (this.listCallback != null) {
-      this.listCallback(this.name);
+      this.listCallback(this.name, this.$icon.src, this.$name.innerHTML);
     }
   }
 }

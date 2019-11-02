@@ -36,6 +36,7 @@ class MessagesDisplay extends HTMLElement {
 
   scrollDown() {
     this.$scrollBody.scrollTop = this.$scrollBody.scrollHeight;
+    console.log('scrolled');
   }
 
   saveMessage(message) {
@@ -56,6 +57,8 @@ class MessagesDisplay extends HTMLElement {
       const message = this.localCache.chats[this.name].messages[i];
       this.renderMessage(message);
     }
+    var sd = this.scrollDown.bind(this);
+    setTimeout(function(){sd()}, 100);
   }
 }
 

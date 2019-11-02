@@ -76,6 +76,7 @@ class MessageForm extends HTMLElement {
   load(name) {
     this.$attachedDisplay.clearDisplay();
     this.$attachedDisplay.loadMessages(name);
+    this.$attachedDisplay.scrollDown();
   }
 }
 

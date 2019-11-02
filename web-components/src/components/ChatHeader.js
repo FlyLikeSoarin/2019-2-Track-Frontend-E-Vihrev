@@ -18,36 +18,66 @@ template.innerHTML = `
 
   .title {
     padding-top: 0.4em;
+  }
+
+  .icon-title {
     padding-left: 1em;
+    height: 1.3em;
+    display: flex;
+    flex-direction: row;
     flex-grow: 1;
   }
 
-  .icon {
+  .button-icon {
     position: relative;
-    top: 0.1em;
     left: 0.6em;
     height: 1em;
     weigth: 1em;
   }
 
-  .search {
+  .search-icon {
       position: relative;
-      top: 0.1em;
       right: 0.6em;
       height: 1em;
       weigth: 1em;
+  }
+
+  .user-icon {
+      position: relative;
+      flex-basis: 1.1em;
+      padding-right: 0.3em;
+      top: 0.1em;
+      height: 1.1em;
+      weigth: 1.1em;
+  }
+
+  .button-hover {
+    margin: 0.05em;
+    padding: 0.10em;
+    border-radius: 50%;
+    transition: 0.3s;
+  }
+
+  .button-hover:hover {
+    background: #FFFFFF55;
+    transition: 0.3s;
   }
 
 </style>
 
 <div class="header">
     <div class="button">
-      <img class="icon">
+      <img class="button-icon button-hover">
     </div>
-    <div class="title">
-      Messenger
+    <div class="icon-title">
+      <img class="user-icon">
+      <div class="title">
+        Messenger
+      </div>
     </div>
-    <img class="search">
+    <div class="button">
+      <img class="search-icon button-hover">
+    </div>
 </div>
 `;
 
@@ -58,8 +88,9 @@ class ChatHeader extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     this.$title = this.shadowRoot.querySelector('.title');
-    this.$img = this.shadowRoot.querySelector('.icon');
-    this.$searchImg = this.shadowRoot.querySelector('.search');
+    this.$img = this.shadowRoot.querySelector('.button-icon');
+    this.$userIcon = this.shadowRoot.querySelector('.user-icon');
+    this.$searchImg = this.shadowRoot.querySelector('.search-icon');
 
     this.$img.src = menuImg;
     this.$img.alt = 'Menu';
@@ -69,6 +100,7 @@ class ChatHeader extends HTMLElement {
     this.$searchImg.alt = 'Search';
 
     this.state = 'chat-list';
+    this.$userIcon.style.display = "none";
     this.applicationCallback = null;
   }
 
@@ -77,13 +109,17 @@ class ChatHeader extends HTMLElement {
     this.state = 'chat-list';
     this.$img.src = menuImg;
     this.$img.alt = 'Menu';
+    this.$userIcon.style.display = "none";
   }
 
-  setDialogState(name) {
+  setDialogState(name, icon) {
     this.$title.innerHTML = name;
     this.state = 'dialog';
     this.$img.src = backImg;
     this.$img.alt = 'Go back';
+
+    this.$userIcon.src = icon;
+    this.$userIcon.style.display = "block";
   }
 
   setApplicationCallback(callback) {
