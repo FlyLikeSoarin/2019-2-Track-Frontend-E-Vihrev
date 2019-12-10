@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router /* , Route, Switch */ } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import styled from '@emotion/styled';
 import Application from '../components/Application';

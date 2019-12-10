@@ -2,11 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/core';
-// import logo from '../assets/logo.svg';
-// import backImg from '../assets/back.png';
-// import menuImg from '../assets/menu.png';
-// import searchImg from '../assets/search-icon.png';
-// import noUserIcon from '../assets/no-user-icon.png';
 
 const MessageOuterBox = styled.div`
 	display: flex;
@@ -22,9 +17,6 @@ const fadein = keyframes`
 const WidthHolder = styled.div`
 	max-width: 80%;
 	overflow-wrap: break-word;
-	/* background-color: blue; */
-	/* display: flex; */
-	/* flex-direction: column; */
 	align-self: flex-end;
 	animation: fadein 0.6s;
 `;
@@ -32,8 +24,6 @@ const WidthHolder = styled.div`
 const MessageBox = styled.div`
 	position: relative;
 	right: 0px;
-	/* flex-shrink: 1; */
-	/* align-self: flex-end; */
 	background-color: #f3e5f5;
 	margin: 0.15em;
 	border: 0.05em;

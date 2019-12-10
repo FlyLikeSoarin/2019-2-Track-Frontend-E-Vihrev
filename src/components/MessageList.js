@@ -14,12 +14,6 @@ const ScrollBody = styled.div`
 class MessageList extends React.Component {
 	constructor(props) {
 		super(props);
-		// this.shadowRoot = this.attachShadow({ mode: 'open' });
-		// this.shadowRoot.appendChild(template.content.cloneNode(true));
-		//
-		// this.storage = window.localStorage;
-		// this.localCache = window.localStorage;
-		// this.$scrollBody = this.shadowRoot.querySelector('.scroll-body');
 		this.refBottom = React.createRef();
 	}
 

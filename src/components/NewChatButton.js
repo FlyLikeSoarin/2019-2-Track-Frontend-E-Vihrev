@@ -34,16 +34,13 @@ const NewChatInput = styled.div`
 
 const pulse = keyframes`
   from {
-    -moz-box-shadow: 0 0 0 0 rgba(142, 36, 170, 0.5);
     box-shadow: 0 0 0 0 rgba(142, 36, 170, 0.4);
   }
   70% {
-      -moz-box-shadow: 0 0 0 25px rgba(142, 36, 170, 0);
-      box-shadow: 0 0 0 25px rgba(142, 36, 170, 0);
+    box-shadow: 0 0 0 25px rgba(142, 36, 170, 0);
   }
   to {
-      -moz-box-shadow: 0 0 0 0 rgba(142, 36, 170, 0);
-      box-shadow: 0 0 0 0 rgba(142, 36, 170, 0);
+    box-shadow: 0 0 0 0 rgba(142, 36, 170, 0);
   }
 `;
 
@@ -67,12 +64,6 @@ const IconHolder = styled.div`
 		right: 0em !important;
 	}
 `;
-
-// .icon.selected {
-//   transition: 1s;
-//   transform: rotate(-180deg);
-//   right: 0em !important;
-// }
 
 const IconImg = styled.img`
 	position: relative;
@@ -104,23 +95,12 @@ class NewChatButton extends React.Component {
 	}
 
 	Activate() {
-		// this.$form.reset();
-		// //this.$input.style.display = 'flex';
-		// this.$form.focusOn();
-		// this.$input.classList.add('selected');
-		// this.$form.classList.add('selected');
-		// this.$icon.classList.add('selected');
 		this.refIconHolder.current.classList.add('selected');
 		this.refNewChatInput.current.classList.add('selected');
 		this.setState({ isInFocus: true });
 	}
 
 	Deactivate() {
-		// this.$form.reset();
-		// this.$input.style.display = 'none';
-		// this.$input.classList.remove('selected');
-		// this.$form.classList.remove('selected');
-		// this.$icon.classList.remove('selected');
 		this.refIconHolder.current.classList.remove('selected');
 		this.refNewChatInput.current.classList.remove('selected');
 		this.setState({ isInFocus: false });
