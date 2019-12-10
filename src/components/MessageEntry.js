@@ -25,7 +25,7 @@ const WidthHolder = styled.div`
 	/* background-color: blue; */
 	/* display: flex; */
 	/* flex-direction: column; */
-
+	align-self: flex-end;
 	animation: fadein 0.6s;
 `;
 
@@ -34,6 +34,7 @@ const MessageBox = styled.div`
 	right: 0px;
 	/* flex-shrink: 1; */
 	/* align-self: flex-end; */
+	background-color: #f3e5f5;
 	margin: 0.15em;
 	border: 0.05em;
 	padding: 0.15em;
