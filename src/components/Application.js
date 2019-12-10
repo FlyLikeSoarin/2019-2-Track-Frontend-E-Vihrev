@@ -105,6 +105,8 @@ class Application extends React.Component {
 			case 'back':
 				this.toChatList();
 				break;
+			default:
+				break;
 		}
 	}
 

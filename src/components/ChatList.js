@@ -73,7 +73,7 @@ class ChatList extends React.Component {
 		const result = [];
 		let i = 0;
 		for (const name in data.chats) {
-			if (true) {
+			if (name !== undefined) {
 				const chatData = data.chats[name];
 				result.push(
 					React.createElement(ChatEntry, {

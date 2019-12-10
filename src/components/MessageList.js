@@ -41,7 +41,6 @@ class MessageList extends React.Component {
 
 		for (let i = 0; i < messages.length; i += 1) {
 			const message = messages[i];
-			console.log(message);
 			result.push(
 				React.createElement(MessageEntry, {
 					key: i.toString(),

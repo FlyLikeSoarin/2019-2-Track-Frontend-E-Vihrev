@@ -119,7 +119,11 @@ class Header extends React.Component {
 		switch (mode) {
 			case 'back':
 				eventHandler('back', null);
+				break;
 			case 'menu':
+				break;
+			default:
+				break;
 		}
 	}
 
