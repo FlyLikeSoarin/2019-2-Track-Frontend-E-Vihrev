@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import noUserIcon from '../assets/no-user-icon.png';
-import doubleCheck from '../assets/double-check.png';
-import styled from '@emotion/styled';
+import React from 'react'
+import PropTypes from 'prop-types'
+import styled from '@emotion/styled'
+import noUserIcon from '../assets/no-user-icon.png'
+import doubleCheck from '../assets/double-check.png'
 
 const ChatOuterBox = styled.div`
   display: flex;
@@ -16,23 +16,23 @@ const ChatOuterBox = styled.div`
   transition: 0.2s;
   :hover {
     color: white;
-    background-color: #8E24AA52;
+    background-color: #8e24aa52;
     transition: 0.2s;
   }
-`;
+`
 
 const ChatBox = styled.div`
   display: flex;
   flex-direction: row;
   margin-right: 1em;
-`;
+`
 
 const UserIcon = styled.img`
   position: relative;
   top: -0.36em;
   height: 2.5em;
   weight: 2.5em;
-`;
+`
 
 const TextContainer = styled.div`
   margin-left: 0.3em;
@@ -42,15 +42,15 @@ const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-`;
+`
 
 const FirstRow = styled.div`
-    height: 0px;
-    display: flex;
-    flex-direction: row;
-    align-self: stretch;
-    padding-bottom: 1em;
-`;
+  height: 0px;
+  display: flex;
+  flex-direction: row;
+  align-self: stretch;
+  padding-bottom: 1em;
+`
 
 const SecondRow = styled.div`
   height: 0px;
@@ -61,9 +61,9 @@ const SecondRow = styled.div`
   padding-bottom: 1.5em;
   font-size: 15px;
   border: 0.2vh;
-  border-bottom-color: #A5A5A5;
+  border-bottom-color: #a5a5a5;
   border-bottom-style: solid;
-`;
+`
 
 const UsernameText = styled.div`
   flex-grow: 1;
@@ -74,102 +74,110 @@ const UsernameText = styled.div`
   border: 0vh;
   margin: 0vh;
   font-size: 25px;
-`;
+`
 
 const LastMessageText = styled.div`
   flex-grow: 1;
-`;
+`
 
 const TimeText = styled.div`
   font-size: 15px;
   color: grey;
-`;
+`
 
 const StateIcon = styled.img`
   position: relative;
   height: 1.6em;
   weight: 1.6em;
-`;
+`
 
 class ChatEntry extends React.Component {
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props)
 
-		this.state = {
-			lastMessageState: doubleCheck
-		};
-	}
+    this.state = {
+      lastMessageState: doubleCheck,
+    }
+  }
 
-	onClick() {
-		if (this.listCallback != null) {
-			this.listCallback(this.name, this.$icon.src, this.$name.innerHTML);
-		}
-	}
+  onClick() {
+    if (this.listCallback != null) {
+      this.listCallback(this.name, this.$icon.src, this.$name.innerHTML)
+    }
+  }
 
-	getLastMessage() {
-		let lastMessage = { text: 'No messages...', timestamp: '' };
-		if (this.props.messages.length > 0) {
-			lastMessage = this.props.messages[this.props.messages.length - 1];
-		}
-		return lastMessage;
-	}
+  getLastMessage() {
+    const { messages } = this.props
+    let lastMessage = { text: 'No messages...', timestamp: '' }
+    if (messages.length > 0) {
+      lastMessage = messages[messages.length - 1]
+    }
+    return lastMessage
+  }
 
-	setChatProps(name, lastMessage, time, icon, displayName) {
-		this.name = name;
-		this.id = this.name;
-		this.$name.innerHTML = displayName;
+  setChatProps(name, lastMessage, time, icon, displayName) {
+    this.name = name
+    this.id = this.name
+    this.$name.innerHTML = displayName
 
-		let lastMessageText = lastMessage.slice(0, 50 + lastMessage.slice(50, 1000).search(' '));
-		if (lastMessageText.length < lastMessage.length) {
-			lastMessageText += '...';
-		}
-		this.$lastMessage.innerHTML = lastMessageText;
+    let lastMessageText = lastMessage.slice(0, 50 + lastMessage.slice(50, 1000).search(' '))
+    if (lastMessageText.length < lastMessage.length) {
+      lastMessageText += '...'
+    }
+    this.$lastMessage.innerHTML = lastMessageText
 
-		this.$time.innerHTML = time;
-		if (icon == null) {
-			this.$icon.src = noUserIcon;
-		}
-	}
+    this.$time.innerHTML = time
+    if (icon == null) {
+      this.$icon.src = noUserIcon
+    }
+  }
 
-	setClickCallback(callback) {
-		this.listCallback = callback;
-	}
+  setClickCallback(callback) {
+    this.listCallback = callback
+  }
 
-	isNameEquel(name) {
-		return name === this.name;
-	}
+  isNameEquel(name) {
+    return name === this.name
+  }
 
-	render() {
-		return (
-			<ChatOuterBox onClick={()=>{this.props.chatSelectionHandler(this.props.name);}}>
-				<ChatBox>
-					<UserIcon src={this.props.userIcon ||  noUserIcon} />
-					<TextContainer>
-						<FirstRow>
-							<UsernameText> {this.props.username} </UsernameText>
-							<TimeText> {this.getLastMessage().timestamp} </TimeText>
-						</FirstRow>
-						<SecondRow>
-							<LastMessageText> {this.getLastMessage().text} </LastMessageText>
-							<StateIcon src={this.state.lastMessageState} />
-						</SecondRow>
-					</TextContainer>
-				</ChatBox>
-			</ChatOuterBox>
-		);
-	}
+  render() {
+    const { chatSelectionHandler, name, userIcon, username } = this.props
+    const { lastMessageState } = this.state
+
+    return (
+      <ChatOuterBox
+        onClick={() => {
+          chatSelectionHandler(name)
+        }}
+      >
+        <ChatBox>
+          <UserIcon src={userIcon || noUserIcon} />
+          <TextContainer>
+            <FirstRow>
+              <UsernameText> {username} </UsernameText>
+              <TimeText> {this.getLastMessage().timestamp} </TimeText>
+            </FirstRow>
+            <SecondRow>
+              <LastMessageText> {this.getLastMessage().text} </LastMessageText>
+              <StateIcon src={lastMessageState} />
+            </SecondRow>
+          </TextContainer>
+        </ChatBox>
+      </ChatOuterBox>
+    )
+  }
 }
 
 ChatEntry.defaultProps = {
-	userIcon: 'no icon',
-};
+  userIcon: 'no icon',
+}
 
 ChatEntry.propTypes = {
-	name: PropTypes.string.isRequired,
-	chatSelectionHandler: PropTypes.func.isRequired,
-	messages: PropTypes.arrayOf(PropTypes.object).isRequired,
-	username: PropTypes.string.isRequired,
-	userIcon: PropTypes.string,
-};
+  name: PropTypes.string.isRequired,
+  chatSelectionHandler: PropTypes.func.isRequired,
+  messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+  username: PropTypes.string.isRequired,
+  userIcon: PropTypes.string,
+}
 
-export default ChatEntry;
+export default ChatEntry
