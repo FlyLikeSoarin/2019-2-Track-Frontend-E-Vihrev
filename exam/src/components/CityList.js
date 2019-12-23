@@ -7,6 +7,8 @@ import {
   Banner,
   SmoothDiv,
   WidthHolder,
+  StyledInput,
+  MaxWidth,
 } from './StyledComponents';
 
 function CityList(props) {

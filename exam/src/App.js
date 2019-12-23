@@ -7,7 +7,12 @@ import {
   Redirect
 } from 'react-router-dom';
 import {
+  FlexRowCenter,
+  Banner,
+  BannerBold,
   Background,
+  WidthHolder,
+  StyledInput,
 } from './components/StyledComponents';
 import CityDisplay from './components/CityDisplay'
 import CityList from './components/CityList'
@@ -17,9 +22,16 @@ const API_KEY = 'ba470733edcfc43ba0e9880969858ccb';
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.storage = window.localStorage;
+    var citiesId = JSON.parse(this.storage.getItem('citiesId'));
+    if (citiesId == undefined) {
+      citiesId = [524901, 2648110, 2968815, 1850147];
+      this.storage.setItem('citiesId', JSON.stringify(citiesId));
+    }
+
     this.state = {
       data: {
-        citiesId:   [524901, 2648110, 2968815, 1850147],
+        citiesId:   citiesId,
         citiesData: [],
       },
     }
@@ -30,9 +42,9 @@ class App extends React.Component {
   }
 
   getCityData() {
+    console.log(this.state.data.citiesId);
     const {citiesId} = this.state.data;
     for (const i in citiesId) {
-      console.log(i);
       const cityId = citiesId[i];
       fetch(`https://api.openweathermap.org/data/2.5/weather?id=` + cityId.toString() + `&appid=` + API_KEY)
         .then(res => res.json())
@@ -51,6 +63,13 @@ class App extends React.Component {
     return (
       <Router>
         <div style={foregroundStyle}>
+          <FlexRowCenter>
+            <WidthHolder>
+              <StyledInput
+                placeholder="Find city..."
+              />
+            </WidthHolder>
+          </FlexRowCenter>
           <Switch >
             <Route path="/CityList">
               <CityList data={this.state.data.citiesData} />
@@ -61,7 +80,11 @@ class App extends React.Component {
             <Redirect from='/' to="/City/0" />
           </Switch>
         </div>
-        <Background style={backgroundStyle} />
+        <Background style={backgroundStyle}>
+          <FlexRowCenter>
+            <BannerBold> WEATHER <br/> NOW </BannerBold> <Banner/> <Banner/>
+          </FlexRowCenter>
+        </Background>
       </Router>
     );
   }

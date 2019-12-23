@@ -40,6 +40,16 @@ const Banner = styled.div`
   margin: 10px;r
 `;
 
+const BannerBold = styled.div`
+  font-size: 50px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  flex-grow: 1;
+  text-align: center;
+  margin: 10px;
+`;
+
 const GiantBanner = styled.div`
   font-size: 100px;
   color: white;
@@ -70,13 +80,43 @@ const WidthHolder = styled.div`
   max-width: 1000px;
 `;
 
+const StyledInput = styled.input`
+  display: block;
+  font-size: 16px;
+  padding: 5px;
+  border: none;
+  margin-top: 10px;
+  /* border: 2px solid ${colors.grey}; */
+  border-radius: 5px;
+  color: ${colors.grey};
+  transition: all 0.3s ease-out;
+  width:  calc(100% - 10px);
+
+  background-color: ${colors.white};
+
+  :focus {
+    outline: none;
+    /* border-radius: 8px;
+    border-color: #EBD292; */
+    background-color: ${colors.grey} !important;
+    color: ${colors.white} !important;
+  }
+`;
+
+const MaxWidth = styled.div`
+  width:100%;
+`;
+
 export {
   FlexRowCenter,
   FlexColCenter,
   Background,
   SmallBanner,
   Banner,
+  BannerBold,
   GiantBanner,
   SmoothDiv,
   WidthHolder,
+  StyledInput,
+  MaxWidth,
 };
