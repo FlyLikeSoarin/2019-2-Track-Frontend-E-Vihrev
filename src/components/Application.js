@@ -5,7 +5,6 @@ import Header from './Header';
 import ChatList from './ChatList';
 import ChatPage from './ChatPage';
 import ProfilePage from './ProfilePage';
-// import LoginPage from './LoginPage';
 
 const OuterContainer = styled.div`
 	background-color: #333;
@@ -36,9 +35,7 @@ class Application extends React.Component {
 			data: this.loadData(),
 		};
 
-		// this.chatSelectionHandlerBounded = this.chatSelectionHandler.bind(this);
 		this.setDataBounded = this.setData.bind(this);
-		// this.headerEventHandlerBounded = this.headerEventHandler.bind(this);
 		this.sendMessageBounded = this.sendMessage.bind(this);
 	}
 
@@ -50,7 +47,6 @@ class Application extends React.Component {
 	}
 
 	loadData() {
-		// let data = {};
 		let data = this.storage.getItem('Chat_local_cache');
 		if (data == null) {
 			data = { chats: {} };
@@ -70,27 +66,6 @@ class Application extends React.Component {
 			},
 		};
 
-		//
-		// fetch("https://127.0.0.1:8000/chat/list/")
-		//   .then((response)=>(response.json()))
-		//   .then((response)=>(this.setData((data)=>{
-		//     data.chats = response;
-		//     console.log(response);
-		//     return data;
-		//   })));
-		//
-		// fetch("https://127.0.0.1:8000/user/profile/?id=1")
-		//   .then((response)=>(response.json()))
-		//   .then((response)=>(this.setData((data)=>{
-		//     data.myProfile = response;
-		//     console.log(response);
-		//     return data;
-		//   })));
-
-		// data.myProfile = {
-		//   name: 'flylikesoarin', displayedName: 'FlyLikeSoarin', userIcon: undefined,
-		//   information: {'Phone number': '+7-985-290-2394', 'Location': 'Moscow, Russia', 'Birthday': '22.01.1999'},
-		// };
 		return data;
 	}
 
@@ -111,16 +86,6 @@ class Application extends React.Component {
 		}
 	}
 
-	// headerEventHandler(type, data) {
-	//   switch (type) {
-	//     case 'back':
-	//       this.toChatList();
-	//       break;
-	//     default:
-	//       break;
-	//   }
-	// }
-
 	render() {
 		const { data } = this.state;
 
@@ -131,11 +96,7 @@ class Application extends React.Component {
 					<ContentContainer>
 						<Switch>
 							<Route path="/chats">
-								<ChatList
-									// chatSelectionHandler={this.chatSelectionHandlerBounded}
-									data={data}
-									setData={this.setDataBounded}
-								/>
+								<ChatList data={data} setData={this.setDataBounded} />
 							</Route>
 							<Route path="/chat/:chatName">
 								<ChatPage

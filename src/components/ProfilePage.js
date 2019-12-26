@@ -147,7 +147,7 @@ ProfilePage.propTypes = {
 	profile: PropTypes.shape({
 		displayedName: PropTypes.string.isRequired,
 		userIcon: PropTypes.string,
-		information: PropTypes.objectOf(PropTypes.text),
+		information: PropTypes.objectOf(PropTypes.string),
 	}).isRequired,
 };
 

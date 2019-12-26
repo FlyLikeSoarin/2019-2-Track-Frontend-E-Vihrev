@@ -11,23 +11,6 @@ const Container = styled.div`
 	height: 100%;
 `;
 
-// function submitHandler(value, name, setData) {
-//   if (value !== '') {
-//     const message = { name: '', timestamp: '', text: '' };
-//     message.text = value;
-//     message.name = 'me';
-//     message.timestamp = new Date().toLocaleTimeString('en-US', {
-//       hour12: false,
-//       hour: 'numeric',
-//       minute: 'numeric',
-//     });
-//     setData((data) => {
-//       data.chats[name].messages.push(message);
-//       return data;
-//     });
-//   }
-// }
-
 function ChatPage(props) {
 	const { data, sendMessage } = props;
 	const InputFormStyle = {

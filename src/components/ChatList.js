@@ -34,7 +34,6 @@ class ChatList extends React.Component {
 		this.storage = window.localStorage;
 
 		this.addChatBounded = this.addChat.bind(this);
-		// this.chatSelectionHandlerBounded = this.chatSelectionHandler.bind(this);
 	}
 
 	addChat(name) {
