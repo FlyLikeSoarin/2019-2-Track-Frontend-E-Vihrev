@@ -5,112 +5,97 @@ import NewChatButton from './NewChatButton';
 import ChatEntry from './ChatEntry';
 
 const OuterContainer = styled.div`
-  height: 100%;
+	height: 100%;
 `;
 
 const ScrollBodyContainer = styled.div`
-  display: block;
-  height: 100%;
-  overflow-y: scroll;
+	display: block;
+	height: 100%;
+	overflow-y: scroll;
 `;
 
 const ScrollBody = styled.div``;
 
 const OuterNewChatButtonContainer = styled.div`
-  position: relative;
-  display: block;
+	position: relative;
+	display: block;
 `;
 
 const NewChatButtonContainer = styled.div`
-  position: absolute;
-  right: 0px;
-  bottom: 0px;
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
 `;
 
 class ChatList extends React.Component {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.storage = window.localStorage;
+		this.storage = window.localStorage;
 
-    // this.addChatBounded = this.addChat.bind(this);
-    // this.chatSelectionHandlerBounded = this.chatSelectionHandler.bind(this);
-  }
+		this.addChatBounded = this.addChat.bind(this);
+		// this.chatSelectionHandlerBounded = this.chatSelectionHandler.bind(this);
+	}
 
-  // onChatSelection(name, icon, displayName) {
-  // 	this.updateQueue.push(name);
-  // 	this.applicationCallback('load-chat-and-switch', {
-  // 		name,
-  // 		icon,
-  // 		displayName,
-  // 	});
-  // }
+	addChat(name) {
+		const { setData } = this.props;
+		const validName = name.split(' ').join('');
+		const chatData = {
+			chatId: validName,
+			messages: [],
+			icon: null,
+			displayedName: name,
+		};
 
-  // addChat(name) {
-  // 	const { setData } = this.props;
-  // 	const validName = name.split(' ').join('');
-  // 	const chatData = {
-  // 		name: validName,
-  // 		messages: [],
-  // 		icon: null,
-  // 		displayName: name,
-  // 	};
-  //
-  // 	setData((data) => {
-  // 		const dataCopy = { ...data };
-  // 		dataCopy.chats[chatData.name] = chatData;
-  // 		return dataCopy;
-  // 	});
-  // }
+		setData((data) => {
+			const dataCopy = { ...data };
+			dataCopy.chats[chatData.chatId] = chatData;
+			return dataCopy;
+		});
+	}
 
-  // chatSelectionHandler(name) {
-  // 	const { data, chatSelectionHandler } = this.props;
-  // 	chatSelectionHandler(data.chats[name]);
-  // }
+	renderChats() {
+		const { data } = this.props;
+		const result = [];
 
-  renderChats() {
-    const { data } = this.props;
-    const result = [];
+		for (const key in data.chats) {
+			if (key !== undefined) {
+				const chatData = data.chats[key];
+				result.push(
+					React.createElement(ChatEntry, {
+						key: `${chatData.type}/${chatData.chatId.toString()}`,
+						chatId: chatData.chatId.toString(),
+						username: chatData.displayedName,
+						messages: chatData.messages,
+						userIcon: chatData.icon,
+					}),
+				);
+			}
+		}
+		return result;
+	}
 
-    for (const i in data.chats) {
-      if (i !== undefined) {
-        let chatData = data.chats[i]
-        result.push(
-          React.createElement(ChatEntry, {
-            key: chatData.type + '/' + chatData.chat_id.toString(),
-            type: chatData.type,
-            chat_id: chatData.chat_id.toString(),
-            username: chatData.displayName,
-            lastMessage: chatData.lastMessage,
-            userIcon: chatData.icon,
-          }),
-        );
-      }
-    }
-    return result;
-  }
-
-  render() {
-    return (
-      <OuterContainer>
-        <ScrollBodyContainer>
-          <ScrollBody>{this.renderChats()}</ScrollBody>
-        </ScrollBodyContainer>
-        <OuterNewChatButtonContainer>
-          <NewChatButtonContainer>
-            <NewChatButton newChatHandler={this.addChatBounded} />
-          </NewChatButtonContainer>
-        </OuterNewChatButtonContainer>
-      </OuterContainer>
-    );
-  }
+	render() {
+		return (
+			<OuterContainer>
+				<ScrollBodyContainer>
+					<ScrollBody>{this.renderChats()}</ScrollBody>
+				</ScrollBodyContainer>
+				<OuterNewChatButtonContainer>
+					<NewChatButtonContainer>
+						<NewChatButton newChatHandler={this.addChatBounded} />
+					</NewChatButtonContainer>
+				</OuterNewChatButtonContainer>
+			</OuterContainer>
+		);
+	}
 }
 
 ChatList.propTypes = {
-  data: PropTypes.shape({
-    chats: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
-  setData: PropTypes.func.isRequired,
+	data: PropTypes.shape({
+		chats: PropTypes.objectOf(PropTypes.object),
+	}).isRequired,
+	setData: PropTypes.func.isRequired,
 };
 
 export default ChatList;
