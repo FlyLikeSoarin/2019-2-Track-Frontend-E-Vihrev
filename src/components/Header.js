@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { Route, Switch, Link, useParams } from 'react-router-dom';
+import HeaderMenu from './HeaderMenu';
 import backImg from '../assets/back.png';
 import menuImg from '../assets/menu.png';
 import searchImg from '../assets/search-icon.png';
@@ -75,6 +77,11 @@ const SearchIcon = styled.img`
 	}
 `;
 
+const MenuContainer = styled.div`
+	position: relative;
+	width: 0px;
+`;
+
 const UserIcon = styled.img`
 	position: relative;
 	flex-basis: 1.1em;
@@ -87,60 +94,56 @@ const UserIcon = styled.img`
 class Header extends React.Component {
 	constructor(props) {
 		super(props);
-
-		this.LeftButtonHandlerBounded = this.LeftButtonHandler.bind(this);
-	}
-
-	getUserIcon() {
-		const { icon } = this.props;
-
-		if (icon === undefined) {
-			return '';
-		}
-		return <UserIcon src={icon != null ? icon : noUserIcon} />;
-	}
-
-	getLeftButtonImg() {
-		const { mode } = this.props;
-
-		switch (mode) {
-			case 'back':
-				return backImg;
-			case 'menu':
-				return menuImg;
-			default:
-				return '';
-		}
-	}
-
-	LeftButtonHandler() {
-		const { mode, eventHandler } = this.props;
-
-		switch (mode) {
-			case 'back':
-				eventHandler('back', null);
-				break;
-			case 'menu':
-				break;
-			default:
-				break;
-		}
+		this.state = {
+			isMenuDisplayed: false,
+		};
 	}
 
 	render() {
-		const { text, searchHandler } = this.props;
+		const { isMenuDisplayed } = this.state;
+		const { searchHandler, data } = this.props;
+		const menuStyle = { display: isMenuDisplayed ? 'flex' : 'none' };
+		const linkStyle = { display: 'contents' };
 
 		return (
 			<Container>
 				<BackgroundBox />
 				<HeaderBox>
 					<ButtonIcon
-						src={this.getLeftButtonImg()}
-						onClick={this.LeftButtonHandlerBounded}
+						src={menuImg}
+						onClick={() =>
+							this.setState((oldState) => ({
+								isMenuDisplayed: !oldState.isMenuDisplayed,
+							}))
+						}
 					/>
+					<MenuContainer>
+						<HeaderMenu
+							style={menuStyle}
+							collapse={() =>
+								this.setState((oldState) => ({
+									isMenuDisplayed: !oldState.isMenuDisplayed,
+								}))
+							}
+						/>
+					</MenuContainer>
+					<Switch>
+						<Route path="/chats" />
+						<Route path="*">
+							<Link to="/chats" style={linkStyle}>
+								<ButtonIcon src={backImg} />
+							</Link>
+						</Route>
+					</Switch>
 					<TitleContatiner>
-						{this.getUserIcon()}
-						<Title>{text}</Title>
+						<Switch>
+							<Route path="/chats">Messages</Route>
+							<Route path="/chat/:chatName">
+								<ChatTitle data={data} />
+							</Route>
+							<Route path="/profile" />
+							<Route path="/settings">Settings</Route>
+						</Switch>
 					</TitleContatiner>
 					<SearchIcon src={searchImg} onClick={searchHandler} />
 				</HeaderBox>
@@ -149,17 +152,36 @@ class Header extends React.Component {
 	}
 }
 
+function ChatTitle(props) {
+	const { data } = props;
+	const { chatName } = useParams();
+	const { displayedName, icon } = data.chats[chatName];
+
+	return (
+		<Title>
+			<UserIcon src={icon === null ? noUserIcon : icon} />
+			{displayedName}
+		</Title>
+	);
+}
+
+ChatTitle.propTypes = {
+	data: PropTypes.shape({
+		chats: PropTypes.objectOf(PropTypes.object),
+		myProfile: PropTypes.object,
+	}).isRequired,
+};
+
 Header.defaultProps = {
-	icon: undefined,
 	searchHandler: () => {},
 };
 
 Header.propTypes = {
-	eventHandler: PropTypes.func.isRequired,
 	searchHandler: PropTypes.func,
-	mode: PropTypes.oneOf(['back', 'menu']).isRequired,
-	text: PropTypes.string.isRequired,
-	icon: PropTypes.string,
+	data: PropTypes.shape({
+		chats: PropTypes.objectOf(PropTypes.object),
+		myProfile: PropTypes.object,
+	}).isRequired,
 };
 
 export default Header;
