@@ -34,55 +34,39 @@ class ChatList extends React.Component {
 		this.storage = window.localStorage;
 
 		this.addChatBounded = this.addChat.bind(this);
-		this.chatSelectionHandlerBounded = this.chatSelectionHandler.bind(this);
-	}
-
-	onChatSelection(name, icon, displayName) {
-		this.updateQueue.push(name);
-		this.applicationCallback('load-chat-and-switch', {
-			name,
-			icon,
-			displayName,
-		});
 	}
 
 	addChat(name) {
 		const { setData } = this.props;
 		const validName = name.split(' ').join('');
 		const chatData = {
-			name: validName,
+			chatId: validName,
 			messages: [],
 			icon: null,
-			displayName: name,
+			displayedName: name,
 		};
 
 		setData((data) => {
 			const dataCopy = { ...data };
-			dataCopy.chats[chatData.name] = chatData;
+			dataCopy.chats[chatData.chatId] = chatData;
 			return dataCopy;
 		});
-	}
-
-	chatSelectionHandler(name) {
-		const { data, chatSelectionHandler } = this.props;
-		chatSelectionHandler(data.chats[name]);
 	}
 
 	renderChats() {
 		const { data } = this.props;
 		const result = [];
-		let i = 0;
-		for (const name in data.chats) {
-			if (name !== undefined) {
-				const chatData = data.chats[name];
+
+		for (const key in data.chats) {
+			if (key !== undefined) {
+				const chatData = data.chats[key];
 				result.push(
 					React.createElement(ChatEntry, {
-						key: (i += 1).toString(),
-						name: chatData.name,
-						username: chatData.displayName,
+						key: `${chatData.type}/${chatData.chatId.toString()}`,
+						chatId: chatData.chatId.toString(),
+						username: chatData.displayedName,
 						messages: chatData.messages,
 						userIcon: chatData.icon,
-						chatSelectionHandler: this.chatSelectionHandlerBounded,
 					}),
 				);
 			}
@@ -110,7 +94,6 @@ ChatList.propTypes = {
 	data: PropTypes.shape({
 		chats: PropTypes.objectOf(PropTypes.object),
 	}).isRequired,
-	chatSelectionHandler: PropTypes.func.isRequired,
 	setData: PropTypes.func.isRequired,
 };
 

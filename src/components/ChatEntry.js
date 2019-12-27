@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 import noUserIcon from '../assets/no-user-icon.png';
 import doubleCheck from '../assets/double-check.png';
 
@@ -91,93 +92,46 @@ const StateIcon = styled.img`
 	weight: 1.6em;
 `;
 
-class ChatEntry extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			lastMessageState: doubleCheck,
-		};
+function getLastMessage(messages) {
+	let lastMessage = { text: 'No messages...', timestamp: '' };
+	if (messages.length > 0) {
+		lastMessage = messages[messages.length - 1];
 	}
+	return lastMessage;
+}
 
-	onClick() {
-		if (this.listCallback != null) {
-			this.listCallback(this.name, this.$icon.src, this.$name.innerHTML);
-		}
-	}
+function ChatEntry(props) {
+	const { chatId, userIcon, username, messages } = props;
+	const linkStyle = { display: 'contents' };
+	const lastMessage = getLastMessage(messages);
 
-	getLastMessage() {
-		const { messages } = this.props;
-		let lastMessage = { text: 'No messages...', timestamp: '' };
-		if (messages.length > 0) {
-			lastMessage = messages[messages.length - 1];
-		}
-		return lastMessage;
-	}
-
-	setChatProps(name, lastMessage, time, icon, displayName) {
-		this.name = name;
-		this.id = this.name;
-		this.$name.innerHTML = displayName;
-
-		let lastMessageText = lastMessage.slice(
-			0,
-			50 + lastMessage.slice(50, 1000).search(' '),
-		);
-		if (lastMessageText.length < lastMessage.length) {
-			lastMessageText += '...';
-		}
-		this.$lastMessage.innerHTML = lastMessageText;
-
-		this.$time.innerHTML = time;
-		if (icon == null) {
-			this.$icon.src = noUserIcon;
-		}
-	}
-
-	setClickCallback(callback) {
-		this.listCallback = callback;
-	}
-
-	isNameEquel(name) {
-		return name === this.name;
-	}
-
-	render() {
-		const { chatSelectionHandler, name, userIcon, username } = this.props;
-		const { lastMessageState } = this.state;
-
-		return (
-			<ChatOuterBox
-				onClick={() => {
-					chatSelectionHandler(name);
-				}}
-			>
+	return (
+		<Link to={`/chat/${chatId}`} style={linkStyle}>
+			<ChatOuterBox>
 				<ChatBox>
-					<UserIcon src={userIcon || noUserIcon} />
+					<UserIcon src={userIcon} />
 					<TextContainer>
 						<FirstRow>
 							<UsernameText> {username} </UsernameText>
-							<TimeText> {this.getLastMessage().timestamp} </TimeText>
+							<TimeText> {lastMessage.timestamp} </TimeText>
 						</FirstRow>
 						<SecondRow>
-							<LastMessageText> {this.getLastMessage().text} </LastMessageText>
-							<StateIcon src={lastMessageState} />
+							<LastMessageText> {lastMessage.text} </LastMessageText>
+							<StateIcon src={doubleCheck} />
 						</SecondRow>
 					</TextContainer>
 				</ChatBox>
 			</ChatOuterBox>
-		);
-	}
+		</Link>
+	);
 }
 
 ChatEntry.defaultProps = {
-	userIcon: 'no icon',
+	userIcon: noUserIcon,
 };
 
 ChatEntry.propTypes = {
-	name: PropTypes.string.isRequired,
-	chatSelectionHandler: PropTypes.func.isRequired,
+	chatId: PropTypes.string.isRequired,
 	messages: PropTypes.arrayOf(PropTypes.object).isRequired,
 	username: PropTypes.string.isRequired,
 	userIcon: PropTypes.string,

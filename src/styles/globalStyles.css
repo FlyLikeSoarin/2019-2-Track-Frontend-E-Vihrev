@@ -30,3 +30,7 @@ code {
     'Courier New',
     monospace;
 }
+
+.signin-button {
+  height: 40px;
+}
