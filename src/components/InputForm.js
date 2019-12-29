@@ -65,6 +65,7 @@ class InputForm extends React.Component {
 		return (
 			<form onSubmit={(evt) => this.onSubmit(evt)}>
 				<InputField
+					type="text"
 					style={style}
 					name={name}
 					placeholder={placeholder}
