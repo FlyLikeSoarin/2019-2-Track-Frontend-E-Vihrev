@@ -6,9 +6,9 @@ import appState from './appState';
 
 const rootReducer = combineReducers({
 	counter,
-	appData: appData,
-	profileInfo: profileInfo,
-	appState: appState,
+	appData,
+	profileInfo,
+	appState,
 });
 
 export default rootReducer;

@@ -143,7 +143,7 @@ export function postMessage(chat, text) {
 				Authorization: `Token ${store.getState().profileInfo.auth.token}`,
 			},
 			body: JSON.stringify({
-				text: text,
+				text,
 			}),
 		})
 			.then(
