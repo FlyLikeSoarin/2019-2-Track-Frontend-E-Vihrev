@@ -7,7 +7,7 @@ import ChatListContainer from './ChatListContainer';
 import ChatPageContainer from './ChatPageContainer';
 import ProfilePageContainer from './ProfilePageContainer';
 import { fetchMessages } from '../actions/appData';
-import { history } from '../routes';
+import { history } from '../routes/history';
 import store from '../store';
 
 const OuterContainer = styled.div`

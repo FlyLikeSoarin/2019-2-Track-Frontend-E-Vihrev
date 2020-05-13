@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import LoginPage from './LoginPage';
 import { authenticateWithUsernamePassword } from '../actions/profileInfo.js';
-import { history } from '../routes';
+import { history } from '../routes/history';
 
 const mapStateToProps = (state) => {
 	if (state.profileInfo.auth.token !== undefined) {

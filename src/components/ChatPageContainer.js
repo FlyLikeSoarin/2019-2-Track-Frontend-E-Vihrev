@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import ChatPage from './ChatPage';
 import { postMessage, fetchMessages } from '../actions/appData.js';
-import { history } from '../routes';
+import { history } from '../routes/history';
 
 const mapStateToProps = (state) => {
 	if (state.profileInfo.auth.token === undefined) {

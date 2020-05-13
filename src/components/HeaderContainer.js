@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Header from './Header';
 import { joinChat } from '../actions/appData';
-import { history } from '../routes';
+import { history } from '../routes/history';
 
 const mapStateToProps = (state, ownProps) => {
 	if (state.profileInfo.auth.token === undefined) {
