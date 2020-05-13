@@ -30,19 +30,22 @@ class MessageList extends React.Component {
 	}
 
 	renderMessages() {
-		const { messages } = this.props;
+		const { messages, profileInfo } = this.props;
 		const result = [];
 
-		for (let i = 0; i < messages.length; i += 1) {
-			const message = messages[i];
-			result.push(
-				React.createElement(MessageEntry, {
-					key: i.toString(),
-					name: message.name,
-					text: message.text,
-					timestamp: message.timestamp,
-				}),
-			);
+		if (messages !== undefined) {
+			for (let i = 0; i < messages.length; i += 1) {
+				const message = messages[i];
+				result.push(
+					React.createElement(MessageEntry, {
+						key: i.toString(),
+						username: message.username,
+						text: message.text,
+						timestamp: message.created.slice(0, 8),
+						isFromUser: profileInfo.id === message.user,
+					}),
+				);
+			}
 		}
 		return result;
 	}
@@ -60,9 +63,15 @@ class MessageList extends React.Component {
 MessageList.propTypes = {
 	messages: PropTypes.arrayOf(
 		PropTypes.shape({
-			name: PropTypes.string.isRequired,
+			user: PropTypes.number.isRequired,
+			username: PropTypes.string.isRequired,
 			text: PropTypes.string.isRequired,
-			timestamp: PropTypes.string.isRequired,
+			created: PropTypes.string.isRequired,
+		}),
+	).isRequired,
+	profileInfo: PropTypes.objectOf(
+		PropTypes.shape({
+			id: PropTypes.number,
 		}),
 	).isRequired,
 };

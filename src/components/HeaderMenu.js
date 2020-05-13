@@ -43,7 +43,12 @@ const StyledButton = styled.div`
 
 function HeaderMenu(props) {
 	const linkStyle = { display: 'contents' };
-	const { style, collapse } = props;
+	const { style, collapse, logout } = props;
+
+	const onLogOut = () => {
+		collapse();
+		logout();
+	};
 
 	return (
 		<MenuContainer style={style}>
@@ -56,7 +61,7 @@ function HeaderMenu(props) {
 			<Link to="/settings" style={linkStyle}>
 				<StyledButton onClick={collapse}>Settings</StyledButton>
 			</Link>
-			<StyledButton onClick={collapse}>Log out</StyledButton>
+			<StyledButton onClick={onLogOut}>Log out</StyledButton>
 		</MenuContainer>
 	);
 }
@@ -68,6 +73,7 @@ HeaderMenu.defaultProps = {
 HeaderMenu.propTypes = {
 	style: stylePropType,
 	collapse: PropTypes.func.isRequired,
+	logout: PropTypes.func.isRequired,
 };
 
 export default HeaderMenu;

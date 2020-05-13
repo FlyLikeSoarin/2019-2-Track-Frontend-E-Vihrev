@@ -6,5 +6,6 @@ const middlewares = [ReduxThunk];
 const enhancer = [applyMiddleware(...middlewares)];
 
 export default function configureStore(initialState = {}) {
-	return createStore(rootReducer, initialState, ...enhancer);
+	const store = createStore(rootReducer, initialState, ...enhancer);
+	return store;
 }

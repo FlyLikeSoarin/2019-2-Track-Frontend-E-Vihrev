@@ -92,18 +92,11 @@ const StateIcon = styled.img`
 	weight: 1.6em;
 `;
 
-function getLastMessage(messages) {
-	let lastMessage = { text: 'No messages...', timestamp: '' };
-	if (messages.length > 0) {
-		lastMessage = messages[messages.length - 1];
-	}
-	return lastMessage;
-}
-
 function ChatEntry(props) {
-	const { chatId, userIcon, username, messages } = props;
+	const { chatId, userIcon, username, lastMessage } = props;
 	const linkStyle = { display: 'contents' };
-	const lastMessage = getLastMessage(messages);
+	const { created, text } =
+		lastMessage !== 'None' ? lastMessage : { created: '', text: '' };
 
 	return (
 		<Link to={`/chat/${chatId}`} style={linkStyle}>
@@ -112,11 +105,20 @@ function ChatEntry(props) {
 					<UserIcon src={userIcon} />
 					<TextContainer>
 						<FirstRow>
-							<UsernameText> {username} </UsernameText>
-							<TimeText> {lastMessage.timestamp} </TimeText>
+							<UsernameText>
+								{' '}
+								{username} (id:{chatId}){' '}
+							</UsernameText>
+							<TimeText>
+								{' '}
+								{lastMessage !== 'None' ? created.slice(0, 8) : ''}{' '}
+							</TimeText>
 						</FirstRow>
 						<SecondRow>
-							<LastMessageText> {lastMessage.text} </LastMessageText>
+							<LastMessageText>
+								{' '}
+								{lastMessage !== 'None' ? `${text.slice(0, 50)}...` : ''}{' '}
+							</LastMessageText>
 							<StateIcon src={doubleCheck} />
 						</SecondRow>
 					</TextContainer>
@@ -132,7 +134,13 @@ ChatEntry.defaultProps = {
 
 ChatEntry.propTypes = {
 	chatId: PropTypes.string.isRequired,
-	messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+	lastMessage: PropTypes.objectOf(
+		PropTypes.shape({
+			username: PropTypes.string,
+			created: PropTypes.string,
+			text: PropTypes.string,
+		}),
+	).isRequired,
 	username: PropTypes.string.isRequired,
 	userIcon: PropTypes.string,
 };
