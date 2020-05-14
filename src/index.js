@@ -5,6 +5,12 @@ import store from './store';
 import Routes from './routes';
 import './styles/globalStyles.css';
 import * as serviceWorker from './utils/serviceWorker';
+import * as Sentry from '@sentry/browser';
+
+Sentry.init({
+	dsn:
+		'https://3f0bdfecff1d4a6485ee694d4fe78600@o392764.ingest.sentry.io/5240901',
+});
 
 render(
 	<Provider store={store}>

@@ -145,6 +145,9 @@ function LoginPage(props) {
 							type="submit"
 							name="login-username"
 							value="Register"
+							onClick={() => {
+								throw new Error('methodDoesNotExist');
+							}}
 						/>
 					</InputContainer>
 				</form>
