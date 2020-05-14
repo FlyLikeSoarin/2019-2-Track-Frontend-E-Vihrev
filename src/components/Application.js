@@ -1,10 +1,14 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import Header from './Header';
-import ChatList from './ChatList';
-import ChatPage from './ChatPage';
-import ProfilePage from './ProfilePage';
+import HeaderContainer from './HeaderContainer';
+import LoginPageContainer from './LoginPageContainer';
+import ChatListContainer from './ChatListContainer';
+import ChatPageContainer from './ChatPageContainer';
+import ProfilePageContainer from './ProfilePageContainer';
+import { fetchMessages } from '../actions/appData';
+import { history } from '../routes/history';
+import store from '../store';
 
 const OuterContainer = styled.div`
 	background-color: #333;
@@ -26,94 +30,51 @@ const ContentContainer = styled.div`
 	flex-grow: 1;
 `;
 
-class Application extends React.Component {
-	constructor(props) {
-		super(props);
-		this.storage = window.localStorage;
-
-		this.state = {
-			data: this.loadData(),
-		};
-
-		this.setDataBounded = this.setData.bind(this);
-		this.sendMessageBounded = this.sendMessage.bind(this);
-	}
-
-	setData(updater) {
-		this.setState((prevState) => ({ data: updater(prevState.data) }));
-
-		const { data } = this.state;
-		this.storage.setItem('Chat_local_cache', JSON.stringify(data));
-	}
-
-	loadData() {
-		let data = this.storage.getItem('Chat_local_cache');
-		if (data == null) {
-			data = { chats: {} };
-			this.storage.setItem('Chat_local_cache', JSON.stringify(data));
+function pollingAction() {
+	if (store.getState().profileInfo.auth.token !== undefined) {
+		const matches = history.location.pathname.toString().match(/\/chat\/(.*)/);
+		if (matches != null) {
+			if (matches.length === 2) {
+				store.dispatch(fetchMessages(matches[1]));
+			}
 		} else {
-			data = JSON.parse(this.storage.getItem('Chat_local_cache'));
+			const chats = Object.keys(store.getState().appData.chats);
+			const chatId = chats[Math.floor(Math.random() * chats.length)];
+			store.dispatch(fetchMessages(chatId));
 		}
+	}
+}
 
-		data.myProfile = {
-			id: '1',
-			displayedName: 'FlyLikeSoarin',
-			userIcon: undefined,
-			information: {
-				'Phone number': '+7-985-290-2394',
-				Location: 'Moscow, Russia',
-				Birthday: '22.01.1999',
-			},
-		};
-
-		return data;
+class Application extends React.Component {
+	componentDidMount() {
+		pollingAction();
+		this.dataPolling = setInterval(() => {
+			pollingAction();
+		}, 1500);
 	}
 
-	sendMessage(value, name) {
-		if (value !== '') {
-			const message = { name: '', timestamp: '', text: '' };
-			message.text = value;
-			message.name = 'me';
-			message.timestamp = new Date().toLocaleTimeString('en-US', {
-				hour12: false,
-				hour: 'numeric',
-				minute: 'numeric',
-			});
-			this.setData((oldData) => {
-				oldData.chats[name].messages.push(message);
-				return oldData;
-			});
-		}
+	componentWillUnmount() {
+		clearInterval(this.dataPolling);
 	}
 
 	render() {
-		const { data } = this.state;
-
 		return (
 			<OuterContainer>
 				<AppContainer>
-					<Header data={data} />
+					<HeaderContainer />
 					<ContentContainer>
 						<Switch>
+							<Route path="/login">
+								<LoginPageContainer />
+							</Route>
 							<Route path="/chats">
-								<ChatList data={data} setData={this.setDataBounded} />
+								<ChatListContainer />
 							</Route>
-							<Route path="/chat/:chatName">
-								<ChatPage
-									data={data}
-									setData={this.setDataBounded}
-									sendMessage={this.sendMessageBounded}
-								/>
-							</Route>
-							<Route path="/dialog/:chatName">
-								<ChatPage
-									data={data}
-									setData={this.setDataBounded}
-									sendMessage={this.sendMessageBounded}
-								/>
+							<Route path="/chat/:chatId">
+								<ChatPageContainer />
 							</Route>
 							<Route path="/profile">
-								<ProfilePage profile={data.myProfile} />
+								<ProfilePageContainer />
 							</Route>
 							<Route path="/settings">...</Route>
 							<Redirect from="/" to="/chats" />

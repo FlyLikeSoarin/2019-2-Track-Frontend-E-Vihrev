@@ -18,3 +18,4 @@ deploy:
       - HW7
       - master
       - devel
+      - FinishingLastSem

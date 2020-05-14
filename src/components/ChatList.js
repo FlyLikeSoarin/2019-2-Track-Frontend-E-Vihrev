@@ -31,42 +31,27 @@ class ChatList extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.storage = window.localStorage;
-
 		this.addChatBounded = this.addChat.bind(this);
 	}
 
-	addChat(name) {
-		const { setData } = this.props;
-		const validName = name.split(' ').join('');
-		const chatData = {
-			chatId: validName,
-			messages: [],
-			icon: null,
-			displayedName: name,
-		};
-
-		setData((data) => {
-			const dataCopy = { ...data };
-			dataCopy.chats[chatData.chatId] = chatData;
-			return dataCopy;
-		});
+	addChat(label) {
+		const { createChat } = this.props;
+		createChat(label);
 	}
 
 	renderChats() {
-		const { data } = this.props;
+		const { chats } = this.props;
 		const result = [];
 
-		for (const key in data.chats) {
+		for (const key in chats) {
 			if (key !== undefined) {
-				const chatData = data.chats[key];
+				const chatData = chats[key];
 				result.push(
 					React.createElement(ChatEntry, {
-						key: `${chatData.type}/${chatData.chatId.toString()}`,
-						chatId: chatData.chatId.toString(),
-						username: chatData.displayedName,
-						messages: chatData.messages,
-						userIcon: chatData.icon,
+						key: `${chatData.type}/${chatData.id.toString()}`,
+						chatId: chatData.id.toString(),
+						username: chatData.chatLabel,
+						lastMessage: chatData.lastMessage,
 					}),
 				);
 			}
@@ -91,10 +76,8 @@ class ChatList extends React.Component {
 }
 
 ChatList.propTypes = {
-	data: PropTypes.shape({
-		chats: PropTypes.objectOf(PropTypes.object),
-	}).isRequired,
-	setData: PropTypes.func.isRequired,
+	chats: PropTypes.objectOf(PropTypes.object).isRequired,
+	createChat: PropTypes.func.isRequired,
 };
 
 export default ChatList;

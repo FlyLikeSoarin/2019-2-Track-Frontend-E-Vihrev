@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Route, Switch, Link, useParams } from 'react-router-dom';
-import HeaderMenu from './HeaderMenu';
+import HeaderMenuContainer from './HeaderMenuContainer';
 import backImg from '../assets/back.png';
 import menuImg from '../assets/menu.png';
 import searchImg from '../assets/search-icon.png';
 import noUserIcon from '../assets/no-user-icon.png';
+import InputForm from './InputForm';
 
 const Container = styled.div`
 	display: contents;
@@ -91,6 +92,31 @@ const UserIcon = styled.img`
 	weigth: 1.1em;
 `;
 
+function ChatTitle(props) {
+	const { chatId } = useParams();
+	const { chats } = props;
+	const chat = chats[chatId];
+	const { chatLabel, icon } =
+		chat !== undefined ? chat : { chatLabel: '', icon: undefined };
+
+	return (
+		<Title>
+			<UserIcon src={icon === undefined ? noUserIcon : icon} />
+			{chatLabel}
+		</Title>
+	);
+}
+
+ChatTitle.propTypes = {
+	chats: PropTypes.objectOf(
+		PropTypes.objectOf(
+			PropTypes.shape({
+				chatLabel: PropTypes.string,
+			}),
+		),
+	).isRequired,
+};
+
 class Header extends React.Component {
 	constructor(props) {
 		super(props);
@@ -101,76 +127,75 @@ class Header extends React.Component {
 
 	render() {
 		const { isMenuDisplayed } = this.state;
-		const { searchHandler, data } = this.props;
+		const { searchHandler, chats, joinChat } = this.props;
 		const menuStyle = { display: isMenuDisplayed ? 'flex' : 'none' };
 		const linkStyle = { display: 'contents' };
 
 		return (
 			<Container>
-				<BackgroundBox />
-				<HeaderBox>
-					<ButtonIcon
-						src={menuImg}
-						onClick={() =>
-							this.setState((oldState) => ({
-								isMenuDisplayed: !oldState.isMenuDisplayed,
-							}))
-						}
-					/>
-					<MenuContainer>
-						<HeaderMenu
-							style={menuStyle}
-							collapse={() =>
-								this.setState((oldState) => ({
-									isMenuDisplayed: !oldState.isMenuDisplayed,
-								}))
-							}
-						/>
-					</MenuContainer>
-					<Switch>
-						<Route path="/chats" />
-						<Route path="*">
-							<Link to="/chats" style={linkStyle}>
-								<ButtonIcon src={backImg} />
-							</Link>
-						</Route>
-					</Switch>
-					<TitleContatiner>
-						<Switch>
-							<Route path="/chats">Messages</Route>
-							<Route path="/chat/:chatName">
-								<ChatTitle data={data} />
-							</Route>
-							<Route path="/profile" />
-							<Route path="/settings">Settings</Route>
-						</Switch>
-					</TitleContatiner>
-					<SearchIcon src={searchImg} onClick={searchHandler} />
-				</HeaderBox>
+				<Switch>
+					<Route path={/^(?!.*(\/login)).*$/}>
+						<BackgroundBox />
+						<HeaderBox>
+							<ButtonIcon
+								src={menuImg}
+								onClick={() =>
+									this.setState((oldState) => ({
+										isMenuDisplayed: !oldState.isMenuDisplayed,
+									}))
+								}
+							/>
+							<MenuContainer>
+								<HeaderMenuContainer
+									style={menuStyle}
+									collapse={() =>
+										this.setState((oldState) => ({
+											isMenuDisplayed: !oldState.isMenuDisplayed,
+										}))
+									}
+								/>
+							</MenuContainer>
+							<Switch>
+								<Route path="/chats" />
+								<Route path="*">
+									<Link to="/chats" style={linkStyle}>
+										<ButtonIcon src={backImg} />
+									</Link>
+								</Route>
+							</Switch>
+							<TitleContatiner>
+								<Switch>
+									<Route path="/chats">Messages</Route>
+									<Route path="/chat/:chatId">
+										<ChatTitle chats={chats} />
+									</Route>
+									<Route path="/profile" />
+									<Route path="/settings">Settings</Route>
+								</Switch>
+							</TitleContatiner>
+							<InputForm
+								name="joinChat"
+								placeholder="Chat ID..."
+								submitHandler={joinChat}
+								style={{
+									border: '0px',
+									margin: '5px',
+									outline: 'none',
+									width: '150px',
+									marginRight: '30px',
+
+									fontSize: '20px',
+									fontWeight: 'bold',
+								}}
+							/>
+							<SearchIcon src={searchImg} onClick={searchHandler} />
+						</HeaderBox>
+					</Route>
+				</Switch>
 			</Container>
 		);
 	}
 }
-
-function ChatTitle(props) {
-	const { data } = props;
-	const { chatName } = useParams();
-	const { displayedName, icon } = data.chats[chatName];
-
-	return (
-		<Title>
-			<UserIcon src={icon === null ? noUserIcon : icon} />
-			{displayedName}
-		</Title>
-	);
-}
-
-ChatTitle.propTypes = {
-	data: PropTypes.shape({
-		chats: PropTypes.objectOf(PropTypes.object),
-		myProfile: PropTypes.object,
-	}).isRequired,
-};
 
 Header.defaultProps = {
 	searchHandler: () => {},
@@ -178,10 +203,14 @@ Header.defaultProps = {
 
 Header.propTypes = {
 	searchHandler: PropTypes.func,
-	data: PropTypes.shape({
-		chats: PropTypes.objectOf(PropTypes.object),
-		myProfile: PropTypes.object,
-	}).isRequired,
+	chats: PropTypes.objectOf(
+		PropTypes.objectOf(
+			PropTypes.shape({
+				chatLabel: PropTypes.string,
+			}),
+		),
+	).isRequired,
+	joinChat: PropTypes.func.isRequired,
 };
 
 export default Header;

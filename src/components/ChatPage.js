@@ -12,25 +12,43 @@ const Container = styled.div`
 `;
 
 function ChatPage(props) {
-	const { data, sendMessage } = props;
-	const { chatName } = useParams();
+	const { chats, chatMessages, sendMessage, profileInfo } = props;
+	const { chatId } = useParams();
 
-	if (data.chats[chatName] === undefined) {
+	if (chats[chatId] === undefined) {
 		return 'No chat with such name exists';
 	}
 
+	const messages = chatMessages[chatId];
+
 	return (
 		<Container>
-			<MessageList messages={data.chats[chatName].messages} />
-			<MessageInput submitHandler={(value) => sendMessage(value, chatName)} />
+			<MessageList messages={messages} profileInfo={profileInfo} />
+			<MessageInput submitHandler={(value) => sendMessage(value, chatId)} />
 		</Container>
 	);
 }
 
 ChatPage.propTypes = {
-	data: PropTypes.shape({
-		chats: PropTypes.objectOf(PropTypes.object),
-	}).isRequired,
+	chats: PropTypes.objectOf(
+		PropTypes.objectOf(
+			PropTypes.shape({
+				chatLabel: PropTypes.string,
+			}),
+		),
+	).isRequired,
+	chatMessages: PropTypes.objectOf(
+		PropTypes.objectOf(
+			PropTypes.shape({
+				id: PropTypes.number,
+			}),
+		),
+	).isRequired,
+	profileInfo: PropTypes.objectOf(
+		PropTypes.shape({
+			user: PropTypes.number,
+		}),
+	).isRequired,
 	sendMessage: PropTypes.func.isRequired,
 };
 

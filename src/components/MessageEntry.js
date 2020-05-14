@@ -58,14 +58,18 @@ const MessageDate = styled.div`
 
 const MessageName = styled.div`
 	align-self: flex-start;
-	display: none;
 	color: grey;
 	font-size: 0.75em;
 `;
 
-function MessageEntry({ name, text, timestamp }) {
+function MessageEntry({ username, text, timestamp, isFromUser }) {
 	const type = text.substring(0, 5);
 	const value = text.substring(5, text.length);
+
+	const widthHolderStyle = {
+		alignSelf: isFromUser ? 'flex-end' : 'flex-start',
+	};
+
 	let content;
 	switch (type) {
 		case '/aud_':
@@ -93,10 +97,10 @@ function MessageEntry({ name, text, timestamp }) {
 
 	return (
 		<MessageOuterBox>
-			<WidthHolder>
+			<WidthHolder style={widthHolderStyle}>
 				<MessageOuterBox>
 					<MessageBox>
-						<MessageName> {name} </MessageName>
+						<MessageName> {username} </MessageName>
 						{content}
 						<MessageDate> {timestamp} </MessageDate>
 					</MessageBox>
@@ -107,7 +111,8 @@ function MessageEntry({ name, text, timestamp }) {
 }
 
 MessageEntry.propTypes = {
-	name: PropTypes.string.isRequired,
+	isFromUser: PropTypes.bool.isRequired,
+	username: PropTypes.string.isRequired,
 	text: PropTypes.string.isRequired,
 	timestamp: PropTypes.string.isRequired,
 };

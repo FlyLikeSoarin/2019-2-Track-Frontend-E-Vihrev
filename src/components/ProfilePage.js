@@ -131,7 +131,9 @@ function ProfilePage(props) {
 		<VerticalFlexContainer>
 			<NameIconHolder>
 				<UserIcon src={noUserIcon} />
-				<NameText>{profile.displayedName}</NameText>
+				<NameText>
+					{profile.username} (id:{profile.id})
+				</NameText>
 			</NameIconHolder>
 			<ScrollBody>{information}</ScrollBody>
 		</VerticalFlexContainer>
@@ -145,8 +147,8 @@ InformationField.propTypes = {
 
 ProfilePage.propTypes = {
 	profile: PropTypes.shape({
-		displayedName: PropTypes.string.isRequired,
-		userIcon: PropTypes.string,
+		id: PropTypes.number.isRequired,
+		username: PropTypes.string.isRequired,
 		information: PropTypes.objectOf(PropTypes.string),
 	}).isRequired,
 };
