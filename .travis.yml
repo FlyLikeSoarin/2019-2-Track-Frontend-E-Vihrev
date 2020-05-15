@@ -5,7 +5,7 @@ cache:
   directories:
     - node_modules
 script:
-
+  - cd exam_2
   - npm install -g typescript
   - npm run test
   - npm run build
