@@ -1,11 +1,11 @@
 language: node_js
+before_script: cd exam_2
 node_js:
   - 'stable'
 cache:
   directories:
     - node_modules
 script:
-  - cd exam_2
   - npm install -g typescript
   - npm run test
   - npm run build
