@@ -2,6 +2,8 @@ import React from 'react';
 import TranslationUtils from '../utils/index';
 
 import SelectBox from './SelectBox';
+import SubmitButton from './SubmitButton';
+import TextArea from './TextArea';
 
 const languages: string[] = ['ru', 'en']
 
@@ -83,46 +85,23 @@ class App extends React.Component<AppProps, AppState> {
           <div className="row justify-content-center">
             <div className="col-md-4">
               <div className="row justify-content-end">
-                <div className="form-group w-100">
-                  <label htmlFor="lang-from">Select language</label>
-                  <select className="form-control" id="lang-from" name="lang-from">
-                    <option value={undefined}>{"Detect"}</option>
-                    {options}
-                  </select>
-                </div>
+                <SelectBox ID="langFrom" label="Select Language" options={options} detect={true} />
               </div>
               <div className="row justify-content-end">
-                <div className="form-group w-100">
-                  <label htmlFor="TranslationTextarea">Text to translate</label>
-                  <textarea className="form-control" id="TranslationTextarea" style={{resize:"none"}} rows={5}></textarea>
-                </div>
+                <TextArea isInput={true} />
               </div>
             </div>
             <div className="form-group col-md-2 align-self-center">
               <div className="row justify-content-center">
-                <button type="submit" className="btn btn-primary">
-                  Translate
-                  <svg className="bi bi-arrow-bar-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M10.146 4.646a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-3 3a.5.5 0 01-.708-.708L12.793 8l-2.647-2.646a.5.5 0 010-.708z" clip-rule="evenodd"/>
-                    <path fill-rule="evenodd" d="M6 8a.5.5 0 01.5-.5H13a.5.5 0 010 1H6.5A.5.5 0 016 8zm-2.5 6a.5.5 0 01-.5-.5v-11a.5.5 0 011 0v11a.5.5 0 01-.5.5z" clip-rule="evenodd"/>
-                  </svg>
-                </button>
+                <SubmitButton />
               </div>
             </div>
             <div className="col-md-4">
               <div className="row">
-                <div className="form-group w-100">
-                  <label htmlFor="lang-to">Select language</label>
-                  <select className="form-control" id="lang-to" name="lang-to">
-                    {options}
-                  </select>
-                </div>
+                <SelectBox ID="langTo" label="Select Language" options={options} detect={false} />
               </div>
               <div className="row">
-                <div className="form-group w-100">
-                  <label htmlFor="TranslationTextarea">Translated text</label>
-                  <textarea className="form-control bg-white text-body" id="TranslationTextarea" style={{resize:"none"}} rows={5} readOnly disabled value={this.state.translation}></textarea>
-                </div>
+                <TextArea isInput={false} value={this.state.translation} />
               </div>
             </div>
           </div>
