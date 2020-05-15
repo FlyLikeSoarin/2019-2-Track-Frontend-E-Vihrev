@@ -67,7 +67,7 @@ class App extends React.Component<AppProps, AppState> {
     return (
       <div className="container">
         <div className="row justify-content-center">
-          <h1><span className="badge badge-primary">Translate.mail.ru</span></h1>
+          <h1><span className="badge badge-primary">Translator</span></h1>
         </div>
         <form ref={this.formRef} onSubmit={(evt: any)=>{
           evt.preventDefault();
@@ -83,7 +83,7 @@ class App extends React.Component<AppProps, AppState> {
           )
         }}>
           <div className="row justify-content-center">
-            <div className="col-md-4">
+            <div className="col-md-4 mx-2">
               <div className="row justify-content-end">
                 <SelectBox ID="langFrom" label="Select Language" options={options} detect={true} />
               </div>
@@ -96,7 +96,7 @@ class App extends React.Component<AppProps, AppState> {
                 <SubmitButton />
               </div>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-4  mx-2">
               <div className="row">
                 <SelectBox ID="langTo" label="Select Language" options={options} detect={false} />
               </div>
