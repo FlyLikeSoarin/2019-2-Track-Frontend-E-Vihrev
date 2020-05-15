@@ -1,56 +1,65 @@
 import TranslateUtils from './index';
 
-async function Test() {
-	await TranslateUtils.translate(
-		'And his name is John Cena',
-		'en',
-		'ru',
-		(t: TranslateUtils.translation) => {
-			if (t.ok) {
-				if ((t.text as string[])[0] === 'И его имя Джон Сина') {
-					console.log('EN to RU passed');
-				} else {
-					throw 'EN to RU failed';
-				}
-			} else {
-				throw t.status;
-			}
-		},
-	);
+test('Test translator', done => {
+  var finished: number = 0;
 
-	await TranslateUtils.translate(
-		'И его имя Джон Сина',
-		'ru',
-		'en',
-		(t: TranslateUtils.translation) => {
-			if (t.ok) {
-				if ((t.text as string[])[0] === 'And his name is John Cena') {
-					console.log('RU to EN passed');
-				} else {
-					throw 'RU to EN failed';
-				}
-			} else {
-				throw t.status;
-			}
-		},
-	);
+  TranslateUtils.translate(
+    'And his name is John Cena',
+    'en',
+    'ru',
+    (t: TranslateUtils.translation) => {
+      if (t.ok) {
+        if ((t.text as string[])[0] === 'И его имя Джон Сина') {
+          finished++;
+          if (finished === 3) {done()} else {
+            console.log('EN to RU passed');
+          }
+        } else {
+          throw done(Error('EN to RU failed'));
+        }
+      } else {
+        throw done(Error(t.status));
+      }
+    },
+  );
 
-	await TranslateUtils.translate(
-		'And his name is John Cena',
-		undefined,
-		'ru',
-		(t: TranslateUtils.translation) => {
-			if (t.ok) {
-				if ((t.text as string[])[0] === 'И его имя Джон Сина') {
-					console.log('Auto to EN passed');
-				} else {
-					throw 'Auto to RU failed';
-				}
-			} else {
-				throw t.status;
-			}
-		},
-	);
-}
+  TranslateUtils.translate(
+    'И его имя Джон Сина',
+    'ru',
+    'en',
+    (t: TranslateUtils.translation) => {
+      if (t.ok) {
+        if ((t.text as string[])[0] === 'And his name is John Cena') {
+          finished++;
+          if (finished === 3) {done()} else {
+            console.log('EN to RU passed');
+          }
+        } else {
+          done(Error('RU to EN failed'));
+        }
+      } else {
+        throw done(Error(t.status));
+      }
+    },
+  );
 
-Test();
+  TranslateUtils.translate(
+    'And his name is John Cena',
+    undefined,
+    'ru',
+    (t: TranslateUtils.translation) => {
+      if (t.ok) {
+        if ((t.text as string[])[0] === 'И его имя Джон Сина') {
+          finished++;
+          if (finished === 3) {done()} else {
+            console.log('EN to RU passed');
+          }
+        } else {
+          done(Error('Auto to RU failed'));
+        }
+      } else {
+        throw done(Error(t.status));
+      }
+    },
+  );
+})
