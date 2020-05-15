@@ -34,12 +34,12 @@ export function fetchTranslation(
         return response.json();
       } else {
         // Error on request level
-        throw 'Bad request';
+        throw Error('Bad request');
       }
     },
     (error: any) => {
       // Error on network level
-      throw 'Problems with network';
+      throw Error('Problems with network');
     },
   )
   .then(function(data: responseData): string[] {

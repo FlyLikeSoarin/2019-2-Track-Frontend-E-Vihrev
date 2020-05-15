@@ -57,11 +57,11 @@ export function getLanguages(callback: Function): void {
       if (response.ok) {
         return response.json();
       } else {
-        throw 'Bad request';
+        throw Error('Bad request');
       }
     },
     (error: any) => {
-      throw 'Problems with network';
+      throw Error('Problems with network');
     }
   ).then(function(json: {langs: languageList}): void {
     callback({

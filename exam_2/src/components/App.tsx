@@ -5,8 +5,6 @@ import SelectBox from './SelectBox';
 import SubmitButton from './SubmitButton';
 import TextArea from './TextArea';
 
-const languages: string[] = ['ru', 'en']
-
 
 interface AppState {
   translation: string,
