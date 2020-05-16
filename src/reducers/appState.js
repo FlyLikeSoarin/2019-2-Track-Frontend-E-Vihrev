@@ -10,7 +10,7 @@ const initialState = {
 export default function appState(state = initialState, action) {
 	switch (action.type) {
 		case ActionTypes.UPDATE_APP_STATE:
-			return state;
+			return { ...state, ...action.appState };
 
 		default:
 			return state;

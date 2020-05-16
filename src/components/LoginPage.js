@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import '../styles/globalStyles.css';
+import { useAlert } from 'react-alert';
 
 const CenteredContainer = styled.div`
 	height: 100%;
@@ -123,12 +124,13 @@ const BlankBottom = styled.div`
 function LoginPage(props) {
 	const { onLogin } = props;
 	const formRef = React.createRef();
+	const alert = useAlert();
 
 	return (
 		<CenteredContainer>
 			<FormContainer>
 				<Title>Messenger</Title>
-				<form ref={formRef} onSubmit={(e) => onLogin(e, formRef)}>
+				<form ref={formRef} onSubmit={(e) => onLogin(e, formRef, alert)}>
 					<InputContainer>
 						<InputLabel>Username</InputLabel>
 						<InputField type="text" name="username" />
@@ -140,13 +142,20 @@ function LoginPage(props) {
 					</InputContainer>
 
 					<InputContainer>
-						<LoginButton type="submit" name="login-username" value="Login" />
+						<LoginButton
+							type="submit"
+							name="login-username"
+							value="Login"
+							onClick={() => {
+								formRef.current.action = 'Login';
+							}}
+						/>
 						<RegisterButton
 							type="submit"
 							name="login-username"
 							value="Register"
 							onClick={() => {
-								throw new Error('methodDoesNotExist');
+								formRef.current.action = 'Register';
 							}}
 						/>
 					</InputContainer>

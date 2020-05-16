@@ -136,6 +136,7 @@ ChatEntry.propTypes = {
 	chatId: PropTypes.string.isRequired,
 	lastMessage: PropTypes.objectOf(
 		PropTypes.shape({
+			id: PropTypes.number,
 			username: PropTypes.string,
 			created: PropTypes.string,
 			text: PropTypes.string,
