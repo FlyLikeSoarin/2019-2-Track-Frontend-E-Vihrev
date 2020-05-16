@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/2019-2-Track-Frontend-E-Vihrev/static/css/main.7abd72ec.chunk.css",
+    "main.js": "/2019-2-Track-Frontend-E-Vihrev/static/js/main.f8c4daf1.chunk.js",
+    "main.js.map": "/2019-2-Track-Frontend-E-Vihrev/static/js/main.f8c4daf1.chunk.js.map",
+    "runtime-main.js": "/2019-2-Track-Frontend-E-Vihrev/static/js/runtime-main.d0a04dc6.js",
+    "runtime-main.js.map": "/2019-2-Track-Frontend-E-Vihrev/static/js/runtime-main.d0a04dc6.js.map",
+    "static/js/2.6cc4ab0b.chunk.js": "/2019-2-Track-Frontend-E-Vihrev/static/js/2.6cc4ab0b.chunk.js",
+    "static/js/2.6cc4ab0b.chunk.js.map": "/2019-2-Track-Frontend-E-Vihrev/static/js/2.6cc4ab0b.chunk.js.map",
+    "index.html": "/2019-2-Track-Frontend-E-Vihrev/index.html",
+    "precache-manifest.99c4b512f4362da10624d0e603d734ba.js": "/2019-2-Track-Frontend-E-Vihrev/precache-manifest.99c4b512f4362da10624d0e603d734ba.js",
+    "service-worker.js": "/2019-2-Track-Frontend-E-Vihrev/service-worker.js",
+    "static/css/main.7abd72ec.chunk.css.map": "/2019-2-Track-Frontend-E-Vihrev/static/css/main.7abd72ec.chunk.css.map",
+    "static/js/2.6cc4ab0b.chunk.js.LICENSE.txt": "/2019-2-Track-Frontend-E-Vihrev/static/js/2.6cc4ab0b.chunk.js.LICENSE.txt",
+    "static/media/info.png": "/2019-2-Track-Frontend-E-Vihrev/static/media/info.7c05a94f.png",
+    "static/media/no-user-icon.png": "/2019-2-Track-Frontend-E-Vihrev/static/media/no-user-icon.471a1ad3.png",
+    "static/media/phone.png": "/2019-2-Track-Frontend-E-Vihrev/static/media/phone.70683696.png",
+    "static/media/search-icon.png": "/2019-2-Track-Frontend-E-Vihrev/static/media/search-icon.d41427e1.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d0a04dc6.js",
+    "static/js/2.6cc4ab0b.chunk.js",
+    "static/css/main.7abd72ec.chunk.css",
+    "static/js/main.f8c4daf1.chunk.js"
+  ]
+}
