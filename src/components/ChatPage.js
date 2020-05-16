@@ -37,7 +37,7 @@ ChatPage.propTypes = {
 			}),
 		),
 	).isRequired,
-	chatMessages: PropTypes.objectOf(
+	chatMessages: PropTypes.arrayOf(
 		PropTypes.objectOf(
 			PropTypes.shape({
 				id: PropTypes.number,

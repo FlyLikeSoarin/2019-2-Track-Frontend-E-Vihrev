@@ -13,8 +13,26 @@ export default function appData(state = initialState, action) {
 		}
 
 		case ActionTypes.UPDATE_MESSAGES: {
-			const newChatMessages = { ...state.chatMessages, ...action.chatMessages };
-			return { ...state, chatMessages: newChatMessages };
+			for (const key in action.chatMessages) {
+				if ({}.hasOwnProperty.call(state.chatMessages, key)) {
+					if (
+						action.chatMessages[key].length !== state.chatMessages[key].length
+					) {
+						const newChatMessages = {
+							...state.chatMessages,
+							...action.chatMessages,
+						};
+						return { ...state, chatMessages: newChatMessages };
+					}
+				} else {
+					const newChatMessages = {
+						...state.chatMessages,
+						...action.chatMessages,
+					};
+					return { ...state, chatMessages: newChatMessages };
+				}
+			}
+			return state;
 		}
 
 		default:

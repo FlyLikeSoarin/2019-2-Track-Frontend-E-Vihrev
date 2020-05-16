@@ -1,11 +1,11 @@
 import fetch from 'cross-fetch';
 import ActionTypes from '../constants/ActionTypes';
-
+import ApiUrl from '../constants/ApiUrl';
 import store from '../store';
 
 export function fetchChats() {
 	return (dispatch) => {
-		fetch('http://127.0.0.1:8000/api/chat/list_chats/', {
+		fetch(`${ApiUrl}api/chat/list_chats/`, {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
@@ -36,7 +36,7 @@ export function fetchChats() {
 
 export function postChat(chatLabel) {
 	return (dispatch) => {
-		fetch('http://127.0.0.1:8000/api/chat/create_chat/', {
+		fetch(`${ApiUrl}api/chat/create_chat/`, {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
@@ -70,7 +70,7 @@ export function postChat(chatLabel) {
 
 export function joinChat(chat) {
 	return (dispatch) => {
-		fetch(`http://127.0.0.1:8000/api/chat/${chat}/join_chat/`, {
+		fetch(`${ApiUrl}api/chat/${chat}/join_chat/`, {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
@@ -104,7 +104,7 @@ export function joinChat(chat) {
 
 export function fetchMessages(chat) {
 	return (dispatch) => {
-		fetch(`http://127.0.0.1:8000/api/chat/${chat}/list_messages/`, {
+		fetch(`${ApiUrl}api/chat/${chat}/list_messages/`, {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
@@ -135,7 +135,7 @@ export function fetchMessages(chat) {
 
 export function postMessage(chat, text) {
 	return (dispatch) => {
-		fetch(`http://127.0.0.1:8000/api/chat/${chat}/send_message/`, {
+		fetch(`${ApiUrl}api/chat/${chat}/send_message/`, {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
