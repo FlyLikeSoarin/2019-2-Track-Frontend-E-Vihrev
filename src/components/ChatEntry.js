@@ -100,7 +100,7 @@ function ChatEntry(props) {
 
 	return (
 		<Link to={`/chat/${chatId}`} style={linkStyle}>
-			<ChatOuterBox>
+			<ChatOuterBox id={`${username} (id:${chatId})`}>
 				<ChatBox>
 					<UserIcon src={userIcon} />
 					<TextContainer>

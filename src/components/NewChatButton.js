@@ -132,7 +132,8 @@ class NewChatButton extends React.Component {
 				<NewChatInput ref={this.refNewChatInput}>
 					<InputForm
 						style={InputFormStyle}
-						name="message-text"
+						name="new-chat"
+						id="new-chat"
 						placeholder="Recipient..."
 						submitHandler={this.submitHandlerBounded}
 						isInFocus={isInFocus}

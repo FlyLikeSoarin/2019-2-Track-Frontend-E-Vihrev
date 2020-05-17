@@ -53,15 +53,23 @@ function HeaderMenu(props) {
 	return (
 		<MenuContainer style={style}>
 			<Link to="/chats" style={linkStyle}>
-				<StyledButton onClick={collapse}>Messages</StyledButton>
+				<StyledButton id="to-messages-button" onClick={collapse}>
+					Messages
+				</StyledButton>
 			</Link>
 			<Link to="/profile" style={linkStyle}>
-				<StyledButton onClick={collapse}>Profile</StyledButton>
+				<StyledButton id="to-profile-button" onClick={collapse}>
+					Profile
+				</StyledButton>
 			</Link>
 			<Link to="/settings" style={linkStyle}>
-				<StyledButton onClick={collapse}>Settings</StyledButton>
+				<StyledButton id="to-settings-button" onClick={collapse}>
+					Settings
+				</StyledButton>
 			</Link>
-			<StyledButton onClick={onLogOut}>Log out</StyledButton>
+			<StyledButton id="logout-button" onClick={onLogOut}>
+				Log out
+			</StyledButton>
 		</MenuContainer>
 	);
 }

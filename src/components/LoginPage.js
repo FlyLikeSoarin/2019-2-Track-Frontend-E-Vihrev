@@ -133,17 +133,18 @@ function LoginPage(props) {
 				<form ref={formRef} onSubmit={(e) => onLogin(e, formRef, alert)}>
 					<InputContainer>
 						<InputLabel>Username</InputLabel>
-						<InputField type="text" name="username" />
+						<InputField type="text" name="username" id="username" />
 					</InputContainer>
 
 					<InputContainer>
 						<InputLabel>Password</InputLabel>
-						<InputField type="password" name="password" />
+						<InputField type="password" name="password" id="password" />
 					</InputContainer>
 
 					<InputContainer>
 						<LoginButton
 							type="submit"
+							id="login-username"
 							name="login-username"
 							value="Login"
 							onClick={() => {
@@ -152,7 +153,8 @@ function LoginPage(props) {
 						/>
 						<RegisterButton
 							type="submit"
-							name="login-username"
+							id="register-username"
+							name="register-username"
 							value="Register"
 							onClick={() => {
 								formRef.current.action = 'Register';

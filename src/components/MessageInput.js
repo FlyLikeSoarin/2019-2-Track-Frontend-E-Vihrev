@@ -156,6 +156,7 @@ class MessageInput extends React.Component {
 				<Container>
 					<FlexGrow>
 						<InputForm
+							id="message-text"
 							name="message-text"
 							placeholder="Message..."
 							submitHandler={this.submitHandlerBounded}
