@@ -1,0 +1,186 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputForm renders correctly 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    autoFocus={false}
+    className="css-jrnoqf"
+    name="snapshot-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    placeholder=""
+    style={Object {}}
+    type="text"
+    value=""
+  />
+</form>
+`;
+
+exports[`MessageEntry renders correctly 1`] = `
+<div
+  className="css-1v2921"
+>
+  <div
+    className="css-ecsmvg"
+    style={
+      Object {
+        "alignSelf": "flex-start",
+      }
+    }
+  >
+    <div
+      className="css-1v2921"
+    >
+      <div
+        className="css-fi4w0v"
+      >
+        <div
+          className="css-p6lagf"
+        >
+           
+          user
+           
+        </div>
+        <div
+          className="css-udf8nl"
+        >
+           
+          snapshot
+           
+        </div>
+        <div
+          className="css-1mo3uph"
+        >
+           
+          00:00:00
+           
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MessageInput renders correctly 1`] = `
+<div
+  className="css-11pogay"
+>
+  <div
+    className="css-q0vwmm"
+  >
+    <form
+      onSubmit={[Function]}
+    >
+      <input
+        autoFocus={false}
+        className="css-jrnoqf"
+        name="message-text"
+        onBlur={[Function]}
+        onChange={[Function]}
+        placeholder="Message..."
+        style={
+          Object {
+            "borderColor": "#333",
+            "borderStyle": "solid",
+            "borderTopWidth": "2px",
+          }
+        }
+        type="text"
+        value=""
+      />
+    </form>
+  </div>
+  <div
+    className="css-kianx0"
+    onMouseDown={[Function]}
+    onMouseUp={[Function]}
+  >
+    <span
+      aria-label="Voice Message"
+      role="img"
+    >
+      🎤
+    </span>
+  </div>
+  <div
+    className="css-kianx0"
+    onClick={[Function]}
+  >
+    <span
+      aria-label="Location"
+      role="img"
+    >
+      📌
+    </span>
+  </div>
+  <form
+    action="https://tt-front.now.sh/upload"
+    method="post"
+  >
+    <input
+      className="css-zfhggc"
+      id="image"
+      name="image"
+      onChange={[Function]}
+      style={
+        Object {
+          "left": "-400px",
+          "top": "-400px",
+        }
+      }
+      type="file"
+    />
+    <label
+      className="css-1lxjbmj"
+      htmlFor="image"
+      onDragOver={[Function]}
+    >
+      UPLOAD IMAGE
+    </label>
+  </form>
+</div>
+`;
+
+exports[`NewChatButton renders correctly 1`] = `
+<div
+  className="css-kmkywd"
+>
+  <div
+    className="css-1fkr3uu"
+  >
+    <img
+      alt="New chat"
+      className="css-qpjx77"
+      onClick={[Function]}
+      src="new-chat.png"
+    />
+  </div>
+  <div
+    className="css-1qnfcaf"
+  >
+    <form
+      onSubmit={[Function]}
+    >
+      <input
+        autoFocus={false}
+        className="css-jrnoqf"
+        name="new-chat"
+        onBlur={[Function]}
+        onChange={[Function]}
+        placeholder="Recipient..."
+        style={
+          Object {
+            "borderColor": "black",
+            "transition": "1s",
+            "width": "0em",
+          }
+        }
+        type="text"
+        value=""
+      />
+    </form>
+  </div>
+</div>
+`;
