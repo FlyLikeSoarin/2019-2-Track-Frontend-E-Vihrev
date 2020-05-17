@@ -8,7 +8,7 @@ cache:
     - node_modules
 script:
   - npm install -g typescript
-  - npm run test
+  - npm run test --passWithNoTests
   - npm run build
 
 deploy:
