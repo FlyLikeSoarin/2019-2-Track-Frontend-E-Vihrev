@@ -1,13 +1,22 @@
 language: node_js
 node_js:
   - 'stable'
+
+sudo: required
+addons:
+  chrome: stable
+  hostname: localhost
+
 before_install:
-  - cd exam_2
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+
+cache:
+  directories:
+    - node_modules
 script:
   - npm install -g typescript
   - npm run test
   - npm run build
-
 # deploy:
 #   provider: pages
 #   skip_cleanup: true
