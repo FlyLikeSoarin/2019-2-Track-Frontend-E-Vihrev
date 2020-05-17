@@ -166,7 +166,7 @@ exports[`NewChatButton renders correctly 1`] = `
       <input
         autoFocus={false}
         className="css-jrnoqf"
-        name="message-text"
+        name="new-chat"
         onBlur={[Function]}
         onChange={[Function]}
         placeholder="Recipient..."
