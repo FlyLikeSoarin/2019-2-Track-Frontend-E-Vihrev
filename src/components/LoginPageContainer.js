@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
 import LoginPage from './LoginPage';
-import { authenticateWithUsernamePassword } from '../actions/profileInfo.js';
+import {
+	authenticateWithUsernamePassword,
+	postUser,
+} from '../actions/profileInfo.js';
 import { history } from '../routes/history';
 
 const mapStateToProps = (state) => {
@@ -11,13 +14,18 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-	onLogin: (e, formRef) => {
+	onLogin: (e, formRef, alert) => {
 		e.preventDefault();
-
 		const username = formRef.current[0].value;
 		const password = formRef.current[1].value;
 
-		dispatch(authenticateWithUsernamePassword(username, password));
+		if (username === '' || password === '') {
+			alert.show('Make sure every field is provided');
+		} else if (formRef.current.action.includes('Login')) {
+			dispatch(authenticateWithUsernamePassword(username, password, alert));
+		} else if (formRef.current.action.includes('Register')) {
+			dispatch(postUser(username, password, alert));
+		}
 	},
 });
 

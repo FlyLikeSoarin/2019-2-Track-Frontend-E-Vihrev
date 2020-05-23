@@ -138,6 +138,7 @@ class Header extends React.Component {
 						<BackgroundBox />
 						<HeaderBox>
 							<ButtonIcon
+								id="menu-button"
 								src={menuImg}
 								onClick={() =>
 									this.setState((oldState) => ({
@@ -159,7 +160,7 @@ class Header extends React.Component {
 								<Route path="/chats" />
 								<Route path="*">
 									<Link to="/chats" style={linkStyle}>
-										<ButtonIcon src={backImg} />
+										<ButtonIcon id="back-button" src={backImg} />
 									</Link>
 								</Route>
 							</Switch>

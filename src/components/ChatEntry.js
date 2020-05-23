@@ -100,7 +100,7 @@ function ChatEntry(props) {
 
 	return (
 		<Link to={`/chat/${chatId}`} style={linkStyle}>
-			<ChatOuterBox>
+			<ChatOuterBox id={`${username} (id:${chatId})`}>
 				<ChatBox>
 					<UserIcon src={userIcon} />
 					<TextContainer>
@@ -136,6 +136,7 @@ ChatEntry.propTypes = {
 	chatId: PropTypes.string.isRequired,
 	lastMessage: PropTypes.objectOf(
 		PropTypes.shape({
+			id: PropTypes.number,
 			username: PropTypes.string,
 			created: PropTypes.string,
 			text: PropTypes.string,
