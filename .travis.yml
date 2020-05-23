@@ -13,7 +13,9 @@ before_install:
 cache:
   directories:
     - node_modules
+
 script:
+  - npm install -g typescript
   - npm run test
   - npm run build
 
